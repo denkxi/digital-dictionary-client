@@ -1,1 +1,9 @@
 @import "tailwindcss";
+
+@theme {
+    --color-firefly-1: #f0f1c7;
+    --color-firefly-2: #aecdc7;
+    --color-firefly-3: #6f9c97;
+    --color-firefly-4: #428a91;
+    --color-firefly-5: #2d626a;
+}
