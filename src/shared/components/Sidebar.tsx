@@ -1,60 +1,38 @@
-import { useState } from "react";
-import { Link, useLocation } from "react-router-dom";
+import { NavLink } from 'react-router-dom';
 
-interface NavItem {
-  path: string;
-  label: string;
-  icon: string;
-}
+const menuItems = [
+  { name: 'Dashboard', path: '/' },
+  { name: 'Dictionaries', path: '/dictionaries' },
+  { name: 'Categories', path: '/word-categories' },
+  { name: 'Tests', path: '/tests' },
+  { name: 'Profile', path: '/profile' }
+];
 
-const Sidebar = () => {
-  const location = useLocation();
-  const [collapsed, setCollapsed] = useState(false);
-
-  const navItems: NavItem[] = [
-    { path: '/', label: 'Dashboard', icon: '🏠' },
-    { path: '/vocabulary', label: 'Vocabulary', icon: '📚' },
-    { path: '/categories', label: 'Categories', icon: '🏷️' },
-    { path: '/statistics', label: 'Statistics', icon: '📊' },
-    { path: '/settings', label: 'Settings', icon: '⚙️' },
-  ]
-
-  const toggleSidebar = () => {
-    setCollapsed(!collapsed);
-  };
-
+export default function Sidebar() {
   return (
-    <div className={`bg-blue-50 min-h-screen transition-all duration-300 ${collapsed ? 'w-16' : 'w-64'}`}>
-      <div className="flex justify-between items-center p-4 border-b border-blue-100">
-        {!collapsed && <h2 className="text-blue-800 font-bold text-lg select-none">Dictionary</h2>}
-        <button 
-          onClick={toggleSidebar} 
-          className="text-blue-500 hover:text-blue-700 hover:scale-110 text-2xl font-bold cursor-pointer"
-        >
-          {collapsed ? '→' : '←'}
+    <aside className="fixed top-0 left-0 h-full w-60 bg-primary-1 text-text shadow-lg">
+      <div className="p-6 text-xl font-bold">Dictionary App</div>
+      <nav className="flex flex-col gap-2 px-4">
+        {menuItems.map(item => (
+          <NavLink
+            key={item.path}
+            to={item.path}
+            className={({ isActive }) =>
+              `px-4 py-2 rounded-xl hover:bg-primary-2 transition-all ${
+                isActive ? 'bg-primary-2 font-semibold' : ''
+              }`
+            }
+          >
+            {item.name}
+          </NavLink>
+        ))}
+      </nav>
+
+      <div className="absolute bottom-4 left-0 w-full px-4">
+        <button className="w-full px-4 py-2 bg-accent-2 rounded hover:bg-green-200 text-sm font-medium">
+          Login / Logout
         </button>
       </div>
-      <nav className="mt-6">
-        <ul>
-          {navItems.map((item) => (
-            <li key={item.path} className="mb-2">
-              <Link 
-                to={item.path} 
-                className={`flex items-center p-3 ${
-                  location.pathname === item.path 
-                    ? 'bg-blue-100 text-blue-800' 
-                    : 'text-gray-600 hover:bg-blue-100'
-                } ${collapsed ? 'justify-center' : 'pl-4'}`}
-              >
-                <span className="text-xl">{item.icon}</span>
-                {!collapsed && <span className="ml-3">{item.label}</span>}
-              </Link>
-            </li>
-          ))}
-        </ul>
-      </nav>
-    </div>
+    </aside>
   );
-};
-
-export default Sidebar;
+}

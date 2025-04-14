@@ -1,14 +1,14 @@
 import { configureStore } from '@reduxjs/toolkit';
 import { apiSlice } from '../features/api/apiSlice';
-import vocabularyReducer from '../features/vocabulary/services/vocabularySlice';
+import { wordCategoryApi } from '../features/wordCategories/services/wordCategoryApi';
 
 export const store = configureStore({
   reducer: {
     [apiSlice.reducerPath]: apiSlice.reducer,
-    vocabulary: vocabularyReducer,
+    [wordCategoryApi.reducerPath]: wordCategoryApi.reducer,
   },
   middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware().concat(apiSlice.middleware),
+    getDefaultMiddleware().concat(apiSlice.middleware, wordCategoryApi.middleware),
 });
 
 // Infer the `RootState` and `AppDispatch` types from the store itself

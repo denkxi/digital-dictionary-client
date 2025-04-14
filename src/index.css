@@ -2,11 +2,11 @@
 
 
 @theme {
-    --color-firefly-1: #f0f1c7;
-    --color-firefly-2: #aecdc7;
-    --color-firefly-3: #6f9c97;
-    --color-firefly-4: #428a91;
-    --color-firefly-5: #2d626a;
+    --color-primary-1: #E6F2FF;
+    --color-primary-2: #B8D8FF;
+    --color-accent-1: #FFF8E1;
+    --color-accent-2: #E8F5E9;
+    --color-text: #333333;
 
     --font-sans: 'Lato', sans-serif;
 }
