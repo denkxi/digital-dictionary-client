@@ -1,2 +1,8 @@
 [
+  {
+    "id": 1,
+    "name": "user",
+    "email": "user@test.com",
+    "passwordHash": "$2b$10$r3jQnbskqZNbrZKOx5U3R.yvt32LVgJE6Lse6G33gov42Wwm6xW9y"
+  }
 ]

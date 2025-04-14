@@ -1,4 +1,6 @@
-import { NavLink } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
+import { useAppSelector, useAppDispatch } from '../../app/hooks';
+import { logout } from '../../features/auth/slices/authSlice';
 
 const menuItems = [
   { name: 'Dashboard', path: '/' },
@@ -9,6 +11,19 @@ const menuItems = [
 ];
 
 export default function Sidebar() {
+  const { user } = useAppSelector(state => state.auth);
+  const dispatch = useAppDispatch();
+  const navigate = useNavigate();
+
+  if (!user) return null;
+
+  const handleLogout = () => {
+    dispatch(logout());
+    localStorage.removeItem('token');
+    localStorage.removeItem('user');
+    navigate('/');
+  };
+
   return (
     <aside className="fixed top-0 left-0 h-full w-60 bg-primary-1 text-text shadow-lg">
       <div className="p-6 text-xl font-bold">Dictionary App</div>
@@ -29,8 +44,11 @@ export default function Sidebar() {
       </nav>
 
       <div className="absolute bottom-4 left-0 w-full px-4">
-        <button className="w-full px-4 py-2 bg-accent-2 rounded hover:bg-green-200 text-sm font-medium">
-          Login / Logout
+      <button
+          onClick={handleLogout}
+          className="w-full px-4 py-2 bg-accent-2 rounded hover:bg-green-200 text-sm font-medium"
+        >
+          Logout
         </button>
       </div>
     </aside>

@@ -1,6 +1,25 @@
-What to add:
-- redux
-- commitizen
+TODO:
+Auth
+- Auto-logout on 401
+- Add token expiration handling
+
+Categories
+- Call useGetWordCategoriesQuery() in the list
+- Call useCreateWordCategoryMutation() in the modal
+- Expand to edit/delete when needed
+
+Dashboard
+- User stats (word counts, learned %, etc.)
+- Recent activity
+- Dynamic content based on auth state
+
+Words
+- Fetch categories to show in dropdown
+- Enable editing or deleting words
+
+Other
+- Validate form input
+- Auto-close and refetch on success
 
 
 # React + TypeScript + Vite
