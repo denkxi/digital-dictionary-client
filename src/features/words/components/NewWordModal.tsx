@@ -3,7 +3,7 @@ type Props = {
     dictionaryId: number;
   };
   
-  export default function NewWordModal({ onClose, dictionaryId }: Props) {
+  export default function NewWordModal({ onClose }: Props) {
     return (
       <div className="fixed inset-0 bg-black/30 flex items-center justify-center z-50">
         <div className="bg-white p-6 rounded-lg shadow-md w-full max-w-md">

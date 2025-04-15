@@ -5,12 +5,14 @@ import { authenticate } from '../utils/authMiddleware.ts';
 
 const router = express.Router();
 
+// Get all user's word categories
 router.get('/', authenticate, async (req, res) => {
   const userId = (req as any).userId;
   const categories = await readJSON<WordCategory[]>('categories.json');
   res.json(categories.filter(c => c.createdBy === userId));
 });
 
+// Create new word category
 router.post('/', authenticate, async (req, res) => {
   const userId = (req as any).userId;
   const { name } = req.body;

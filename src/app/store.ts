@@ -1,17 +1,33 @@
-import { configureStore } from '@reduxjs/toolkit';
+import { combineReducers, configureStore } from '@reduxjs/toolkit';
 import { wordCategoryApi } from '../features/wordCategories/services/wordCategoryApi';
 import { authApi } from '../features/auth/services/authApi';
+import storage from 'redux-persist/lib/storage';
+import { persistReducer, persistStore } from 'redux-persist';
 import authReducer from '../features/auth/slices/authSlice';
 
-export const store = configureStore({
-  reducer: {
-    auth: authReducer,
-    [authApi.reducerPath]: authApi.reducer,
-    [wordCategoryApi.reducerPath]: wordCategoryApi.reducer,
-  },
-  middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware().concat(wordCategoryApi.middleware, authApi.middleware),
+const persistConfig = {
+  key: 'root',
+  storage,
+  whitelist: ['auth']
+};
+
+const rootReducer = combineReducers({
+  auth: authReducer,
+  [authApi.reducerPath]: authApi.reducer,
+  [wordCategoryApi.reducerPath]: wordCategoryApi.reducer,
 });
+
+const persistedReducer = persistReducer(persistConfig, rootReducer);
+
+export const store = configureStore({
+  reducer: persistedReducer,
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware({
+      serializableCheck: false
+    }).concat(wordCategoryApi.middleware, authApi.middleware),
+});
+
+export const persistor = persistStore(store);
 
 // Infer the `RootState` and `AppDispatch` types from the store itself
 export type RootState = ReturnType<typeof store.getState>;
