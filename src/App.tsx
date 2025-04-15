@@ -17,8 +17,8 @@ export default function App() {
           <Route path="/dictionaries" element={<PrivateRoute><DictionariesList /></PrivateRoute>} />
           <Route path="/dictionaries/:dictionaryId" element={<PrivateRoute><WordList /></PrivateRoute>} />
           <Route path="/word-categories" element={<PrivateRoute><WordCategoryList /></PrivateRoute>} />
-          <Route path="/tests" element={<div>Tests</div>} />
-          <Route path="/profile" element={<div>Profile</div>} />
+          <Route path="/tests" element={<PrivateRoute><div>Tests</div></PrivateRoute>} />
+          <Route path="/profile" element={<PrivateRoute><div>Profile</div></PrivateRoute>} />
         </Route>
       </Routes>
     </BrowserRouter>
