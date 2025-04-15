@@ -4,9 +4,9 @@ Auth
 - Add token expiration handling
 
 Categories
-- Call useGetWordCategoriesQuery() in the list
-- Call useCreateWordCategoryMutation() in the modal
-- Expand to edit/delete when needed
+- Delete/edit category
+- Dropdown with categories in word creation
+- Sort/filter/pagination
 
 Dashboard
 - User stats (word counts, learned %, etc.)

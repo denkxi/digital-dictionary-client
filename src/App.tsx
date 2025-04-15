@@ -6,8 +6,10 @@ import WordList from './features/words/WordList';
 import Dashboard from './features/dashboard/Dashboard';
 import AuthPage from './features/auth/AuthPage';
 import PrivateRoute from './shared/components/PrivateRoute';
+import Quiz from './features/quizes/components/Quiz';
 
 export default function App() {
+  console.log('Rendering: App');
   return (
     <BrowserRouter>
       <Routes>
@@ -17,7 +19,7 @@ export default function App() {
           <Route path="/dictionaries" element={<PrivateRoute><DictionariesList /></PrivateRoute>} />
           <Route path="/dictionaries/:dictionaryId" element={<PrivateRoute><WordList /></PrivateRoute>} />
           <Route path="/word-categories" element={<PrivateRoute><WordCategoryList /></PrivateRoute>} />
-          <Route path="/tests" element={<PrivateRoute><div>Tests</div></PrivateRoute>} />
+          <Route path="/tests" element={<PrivateRoute><Quiz /></PrivateRoute>} />
           <Route path="/profile" element={<PrivateRoute><div>Profile</div></PrivateRoute>} />
         </Route>
       </Routes>
