@@ -4,6 +4,8 @@ import dictionaryRouter from './routes/dictionaryRoutes.ts';
 import authRouter from './routes/authRoutes.js';
 import wordRouter from './routes/wordRoutes.ts';
 import categoryRoutes from './routes/wordCategoryRoutes.ts';
+import cookieParser from 'cookie-parser';
+
 
 const app = express();
 const port = 3000;
@@ -13,6 +15,7 @@ app.use(cors({
   credentials: true
 }));
 
+app.use(cookieParser());
 app.use(express.json());
 app.use('/api/auth', authRouter);
 app.use('/api/dictionaries', dictionaryRouter);

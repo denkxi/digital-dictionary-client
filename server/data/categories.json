@@ -12,5 +12,12 @@
     "description": "",
     "createdBy": 1,
     "createdAt": "2025-04-15T15:52:14.114Z"
+  },
+  {
+    "id": 3,
+    "name": "tech",
+    "description": "",
+    "createdBy": 1,
+    "createdAt": "2025-04-16T09:49:50.312Z"
   }
 ]

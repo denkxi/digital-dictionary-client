@@ -1,11 +1,15 @@
 import express from 'express';
 import bcrypt from 'bcrypt';
 import { readJSON, writeJSON } from '../utils/db.ts';
-import { generateToken } from '../utils/authMiddleware.ts';
+import { generateAccessToken, generateRefreshToken } from '../utils/authMiddleware.ts';
 import { User } from '../types.ts';
+import jwt from 'jsonwebtoken';
 
 const router = express.Router();
 const SALT_ROUNDS = 10;
+
+// TODO: use env file in real app
+const JWT_SECRET = 'super-secret-key'; 
 
 // Register
 router.post('/register', async (req, res) => {
@@ -30,7 +34,16 @@ router.post('/register', async (req, res) => {
   users.push(newUser);
   await writeJSON('users.json', users);
 
-  const token = generateToken(newUser.id);
+  const token = generateAccessToken(newUser.id);
+  const refreshToken = generateRefreshToken(newUser.id);
+
+  res.cookie('refreshToken', refreshToken, {
+    httpOnly: true,
+    sameSite: 'strict',
+    secure: false,
+    maxAge: 7 * 24 * 60 * 60 * 1000
+  });
+
   res.status(201).json({ user: { id: newUser.id, name, email }, token });
 });
 
@@ -49,8 +62,42 @@ router.post('/login', async (req, res) => {
   const match = await bcrypt.compare(password, user.passwordHash);
   if (!match) return res.status(401).json({ error: 'Invalid password' });
 
-  const token = generateToken(user.id);
+  const token = generateAccessToken(user.id);
+  const refreshToken = generateRefreshToken(user.id);
+
+  res.cookie('refreshToken', refreshToken, {
+    httpOnly: true,
+    sameSite: 'strict',
+    secure: false,
+    maxAge: 7 * 24 * 60 * 60 * 1000
+  });
+  
   res.status(200).json({ user: { id: user.id, name: user.name, email: user.email }, token });
+});
+
+// Refresh token
+router.post('/refresh', async (req, res) => {
+  const refreshToken = req.cookies?.refreshToken;
+
+  if (!refreshToken) return res.sendStatus(401);
+
+  try {
+    const payload = jwt.verify(refreshToken, JWT_SECRET) as { userId: number };
+
+    const newAccessToken = generateAccessToken(payload.userId);
+    const newRefreshToken = generateRefreshToken(payload.userId);
+
+    res.cookie('refreshToken', newRefreshToken, {
+      httpOnly: true,
+      sameSite: 'strict',
+      secure: false, // set true in production with HTTPS
+      maxAge: 7 * 24 * 60 * 60 * 1000 // 7 days
+    });
+
+    res.status(200).json({ token: newAccessToken });
+  } catch (err) {
+    res.sendStatus(403);
+  }
 });
 
 export default router;
