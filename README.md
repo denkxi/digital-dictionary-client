@@ -1,6 +1,33 @@
-What to add:
-- redux
-- commitizen
+TODO:
+Auth
+- Auto-logout on 401
+- Add token expiration handling
+
+Categories
+- Delete/edit category
+- Dropdown with categories in word creation
+- Sort/filter/pagination
+- Improve design (like adjustible flex structure)
+
+Dictionaries
+- Delete/edit
+- More details on dictionary cards
+- Improve design
+
+Words
+- Fetch categories to show in dropdown
+- Enable editing or deleting words
+- Filtering, searching, pagination, sorting
+
+Dashboard
+- User stats (word counts, learned %, etc.)
+- Recent activity
+- Dynamic content based on auth state
+
+Other
+- Implement ract hook form with validation (reusable validation message element)
+- Reusable form components (input, textarea, select, checkbox)
+- ?Reusable modal component
 
 
 # React + TypeScript + Vite

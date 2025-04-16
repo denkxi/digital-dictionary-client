@@ -1,2 +1,27 @@
 [
+  {
+    "id": 1,
+    "writing": "言葉",
+    "translation": "Word",
+    "pronunciation": "Kotoba",
+    "description": "",
+    "wordClass": "Noun",
+    "isStarred": false,
+    "isLearned": false,
+    "dictionaryId": 1,
+    "createdAt": "2025-04-15T21:23:58.045Z"
+  },
+  {
+    "id": 2,
+    "writing": "パスタ",
+    "translation": "Pasta",
+    "pronunciation": "Pasuta",
+    "description": "",
+    "wordClass": "Noun",
+    "isStarred": false,
+    "isLearned": false,
+    "dictionaryId": 1,
+    "categoryId": "1",
+    "createdAt": "2025-04-16T08:05:25.978Z"
+  }
 ]

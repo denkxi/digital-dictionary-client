@@ -7,38 +7,38 @@ export const wordCategoryApi = createApi({
   baseQuery: axiosBaseQuery(),
   tagTypes: ['WordCategory'],
   endpoints: (builder) => ({
-    // GET /categories
+    // GET /word-categories
     getWordCategories: builder.query<WordCategory[], void>({
       query: () => ({
-        url: '/categories',
+        url: '/word-categories',
         method: 'GET'
       }),
       providesTags: ['WordCategory']
     }),
 
-    // POST /categories
+    // POST /word-categories
     createWordCategory: builder.mutation<WordCategory, Partial<Omit<WordCategory, 'id' | 'createdAt'>>>({
       query: (body) => ({
-        url: '/categories',
+        url: '/word-categories',
         method: 'POST',
         data: body
       }),
       invalidatesTags: ['WordCategory']
     }),
 
-    // (optional) DELETE /categories/:id
+    // (optional) DELETE /word-categories/:id
     deleteWordCategory: builder.mutation<{ id: number }, number>({
       query: (id) => ({
-        url: `/categories/${id}`,
+        url: `/word-categories/${id}`,
         method: 'DELETE'
       }),
       invalidatesTags: ['WordCategory']
     }),
 
-    // (optional) PUT /categories/:id
+    // (optional) PUT /word-categories/:id
     updateWordCategory: builder.mutation<WordCategory, Partial<WordCategory> & { id: number }>({
       query: ({ id, ...body }) => ({
-        url: `/categories/${id}`,
+        url: `/word-categories/${id}`,
         method: 'PUT',
         data: body
       }),

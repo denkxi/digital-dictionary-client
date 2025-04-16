@@ -1,15 +1,15 @@
-import { useState } from 'react';
-import WordCategoryModal from './WordCategoryModal';
+import { useState } from "react";
+import NewCategoryModal from "./NewCategoryModal";
+import { useGetWordCategoriesQuery } from "../services/wordCategoryApi";
+import CategoryCard from "./CategoryCard";
 
 export default function WordCategoryList() {
   const [isModalOpen, setIsModalOpen] = useState(false);
-
-  // Placeholder data
-  const wordCategories = [
-    { id: 1, name: 'Travel', description: 'Words related to travel' },
-    { id: 2, name: 'Business', description: 'Corporate and finance vocab' },
-    { id: 3, name: 'Animals', description: '' }
-  ];
+  const {
+    data: categories = [],
+    isLoading,
+    isError,
+  } = useGetWordCategoriesQuery();
 
   return (
     <div>
@@ -23,22 +23,17 @@ export default function WordCategoryList() {
         </button>
       </div>
 
+      {isLoading && <p>Loading...</p>}
+      {isError && <p className="text-red-500">Failed to load categories.</p>}
+
       <ul className="space-y-4">
-        {wordCategories.map(cat => (
-          <li
-            key={cat.id}
-            className="border border-primary-1 rounded p-4 shadow-sm bg-white"
-          >
-            <h2 className="text-lg font-medium text-text">{cat.name}</h2>
-            {cat.description && (
-              <p className="text-sm text-gray-600 mt-1">{cat.description}</p>
-            )}
-          </li>
+        {categories.map((category) => (
+          <CategoryCard key={category.id} category={category} />
         ))}
       </ul>
 
       {isModalOpen && (
-        <WordCategoryModal onClose={() => setIsModalOpen(false)} />
+        <NewCategoryModal onClose={() => setIsModalOpen(false)} />
       )}
     </div>
   );

@@ -5,8 +5,11 @@ import { authenticate } from '../utils/authMiddleware.ts';
 
 const router = express.Router();
 
-router.get('/:dictionaryId', authenticate, async (req, res) => {
-  const dictionaryId = Number(req.params.dictionaryId);
+router.get('/', authenticate, async (req, res) => {
+  const dictionaryId = Number(req.query.dictionaryId);
+  if (!dictionaryId || isNaN(dictionaryId)) {
+    return res.status(400).json({ error: 'Missing dictionaryId' });
+  }
   const words = await readJSON<Word[]>('words.json');
   res.json(words.filter(w => w.dictionaryId === dictionaryId));
 });
@@ -28,7 +31,8 @@ router.post('/', authenticate, async (req, res) => {
     isStarred: data.isMarked ?? false,
     isLearned: false,
     dictionaryId: data.dictionaryId,
-    categoryId: data.categoryId || undefined
+    categoryId: data.categoryId || undefined,
+    createdAt: new Date().toISOString()
   };
 
   words.push(newWord);
