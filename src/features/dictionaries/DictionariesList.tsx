@@ -1,28 +1,11 @@
 import { useState } from 'react';
 import NewDictionaryModal from './components/NewDictionaryModal';
 import DictionaryCard from './components/DictionaryCard';
+import { useGetUserDictionariesQuery } from './services/dictionaryApi';
 
 export default function DictionariesList() {
   const [isModalOpen, setIsModalOpen] = useState(false);
-
-  const dictionaries = [
-    {
-      id: 1,
-      sourceLanguage: 'English',
-      targetLanguage: 'Japanese',
-      description: 'JLPT N5 Vocab',
-      createdAt: '2024-04-01',
-      createdBy: 1
-    },
-    {
-      id: 2,
-      sourceLanguage: 'English',
-      targetLanguage: 'Spanish',
-      description: 'Business terms',
-      createdAt: '2024-04-05',
-      createdBy: 1
-    }
-  ];
+  const { data: dictionaries = [], isLoading, isError } = useGetUserDictionariesQuery();
 
   return (
     <div>
@@ -35,6 +18,9 @@ export default function DictionariesList() {
           + New Dictionary
         </button>
       </div>
+
+      {isLoading && <p>Loading...</p>}
+      {isError && <p className="text-red-500">Failed to load dictionaries.</p>}
 
       <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
         {dictionaries.map(dict => (

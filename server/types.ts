@@ -20,7 +20,14 @@ export interface User {
     dictionaryId: number;
   }
 
-  export type WordClass = 'noun' | 'verb' | 'adjective' | 'adverb' | 'phrase' | 'expression';
+  export enum WordClass {
+    Noun = 'Noun',
+    Verb = 'Verb',
+    Adjective = 'Adjective',
+    Adverb = 'Adverb',
+    Phrase = 'Phrase',
+    Expression = 'Expression',
+  }
 
   export interface WordCategory {
     id: number;
@@ -41,6 +48,7 @@ export interface User {
     isLearned: boolean;
     dictionaryId: number;
     categoryId?: number;
+    createdAt: string;
   }
   
   

@@ -9,7 +9,6 @@ import PrivateRoute from './shared/components/PrivateRoute';
 import Quiz from './features/quizes/components/Quiz';
 
 export default function App() {
-  console.log('Rendering: App');
   return (
     <BrowserRouter>
       <Routes>
