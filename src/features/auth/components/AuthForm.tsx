@@ -45,7 +45,6 @@ export default function AuthForm({ mode }: Props) {
       // Save token and user locally and in redux store
       dispatch(setCredentials(result));
 
-      console.log('Auth success:', result);
       navigate('/');
     } catch (err: any) {
       alert(err.data?.error || 'Authentication failed');
