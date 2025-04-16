@@ -3,9 +3,9 @@ import { wordCategoryApi } from '../features/wordCategories/services/wordCategor
 import { authApi } from '../features/auth/services/authApi';
 import { dictionaryApi } from '../features/dictionaries/services/dictionaryApi';
 import { wordApi } from '../features/words/services/wordApi';
-import storage from 'redux-persist/lib/storage';
 import { persistReducer, persistStore } from 'redux-persist';
 import authReducer from '../features/auth/slices/authSlice';
+import storage from 'redux-persist/lib/storage';
 
 const persistConfig = {
   key: 'root',
@@ -13,13 +13,21 @@ const persistConfig = {
   whitelist: ['auth']
 };
 
-const rootReducer = combineReducers({
+const appReducer = combineReducers({
   auth: authReducer,
   [authApi.reducerPath]: authApi.reducer,
   [wordCategoryApi.reducerPath]: wordCategoryApi.reducer,
   [dictionaryApi.reducerPath]: dictionaryApi.reducer,
   [wordApi.reducerPath]: wordApi.reducer,
 });
+
+const rootReducer = (state: ReturnType<typeof appReducer> | undefined, action: any) => {
+  if (action.type === 'LOGOUT_CLEANUP') {
+    state = undefined;
+  }
+
+  return appReducer(state, action);
+};
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);
 
