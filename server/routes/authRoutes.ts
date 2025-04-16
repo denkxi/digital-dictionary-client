@@ -16,7 +16,7 @@ router.post('/register', async (req, res) => {
   const { name, email, password } = req.body;
 
   if (!name || !email || !password)
-    return res.status(400).json({ error: 'Name, email and password are required' });
+    return res.status(400).json({ error: 'Name, email and password are required' }); // todo: dont use numbers as response codes
 
   const users = await readJSON<User[]>('users.json');
   if (users.find(u => u.email === email))

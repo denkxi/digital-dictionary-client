@@ -1,7 +1,6 @@
 TODO:
-Auth
-- Auto-logout on 401
-- Add token expiration handling
+Quiz
+- Implementation
 
 Categories
 - Delete/edit category

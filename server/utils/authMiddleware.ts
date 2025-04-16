@@ -22,8 +22,6 @@ export function authenticate(req: Request, res: Response, next: NextFunction) {
 
   try {
     const payload = jwt.verify(token, JWT_SECRET) as { userId: number };
-    console.log('Authorization header:', req.headers.authorization);
-    console.log('Token decoded:', payload);
     (req as any).userId = payload.userId;
     next();
   } catch (err) {
