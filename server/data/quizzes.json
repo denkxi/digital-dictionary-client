@@ -1,0 +1,17 @@
+[
+  {
+    "id": 1,
+    "userId": 1,
+    "dictionaryId": 1,
+    "questionType": "mixed",
+    "wordCount": 2,
+    "createdAt": "2025-04-17T10:08:00.528Z",
+    "completedAt": "2025-04-17T11:57:03.982Z",
+    "result": {
+      "correct": 1,
+      "incorrect": 1,
+      "total": 2,
+      "scorePercent": 50
+    }
+  }
+]

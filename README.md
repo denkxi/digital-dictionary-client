@@ -1,6 +1,7 @@
 TODO:
 Quiz
-- Implementation
+- Quiz history
+- Unfinished quizzes
 
 Categories
 - Delete/edit category
@@ -14,7 +15,6 @@ Dictionaries
 - Improve design
 
 Words
-- Fetch categories to show in dropdown
 - Enable editing or deleting words
 - Filtering, searching, pagination, sorting
 
@@ -26,7 +26,6 @@ Dashboard
 Other
 - Implement ract hook form with validation (reusable validation message element)
 - Reusable form components (input, textarea, select, checkbox)
-- ?Reusable modal component
 
 
 # React + TypeScript + Vite
