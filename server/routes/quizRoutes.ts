@@ -12,7 +12,6 @@ import {
 const router = express.Router();
 
 // todo: if quiz type is one certain type, then count and use only words that only have that type (for exampleif question type is pronunciation, then only use words that have a pronunciation)
-
 const MIN_WORDS = 2; // todo: move to shared constants
 
 type QuizSubmission = {
@@ -25,18 +24,23 @@ type QuizSubmission = {
 // Create a new quiz
 router.post("/", authenticate, async (req, res) => {
   const userId = (req as any).userId;
-  const { dictionaryId, questionType, wordCount } = req.body;
+  const { questionType, wordCount } = req.body;
+  const dictionaryId = Number(req.body.dictionaryId);
+  console.log(dictionaryId, questionType, wordCount);
   if (!dictionaryId || !questionType || !wordCount) {
     return res.status(400).json({ error: "Missing required fields" });
   }
-
+  
+  
   // Check if user owns the dictionary
   const userDictionaries = await readJSON<UserDictionary[]>(
     "userDictionaries.json"
   );
+  
   const hasAccess = userDictionaries.some(
     (ud) => ud.userId === userId && ud.dictionaryId === dictionaryId
   );
+
   if (!hasAccess) {
     return res
       .status(403)
@@ -212,9 +216,9 @@ router.post("/:quizId/submit", authenticate, async (req, res) => {
     ...quiz,
     completedAt: new Date().toISOString(),
     result: {
-      correct,
-      incorrect: quizQuestions.length - correct,
-      total: quizQuestions.length,
+      correctCount: correct,
+      incorrectCount: quizQuestions.length - correct,
+      totalCount: quizQuestions.length,
       scorePercent: Math.round((correct / quizQuestions.length) * 100),
     },
   };

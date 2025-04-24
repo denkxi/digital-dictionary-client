@@ -7,6 +7,7 @@ export interface User {
 
 export interface Dictionary {
   id: number;
+  name: string;
   sourceLanguage: string;
   targetLanguage: string;
   description?: string;
@@ -52,9 +53,9 @@ export interface Word {
 }
 
 export interface QuizResultSummary {
-  correct: number;
-  incorrect: number;
-  total: number;
+  correctCount: number;
+  incorrectCount: number;
+  totalCount: number;
   scorePercent: number;
   durationSeconds?: number;
 }

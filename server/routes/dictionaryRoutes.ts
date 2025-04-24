@@ -37,6 +37,7 @@ router.post('/', authenticate, async (req, res) => {
 
   const newDict: Dictionary = {
     id: (dictionaries.at(-1)?.id ?? 0) + 1,
+    name: data.name,
     sourceLanguage: data.sourceLanguage,
     targetLanguage: data.targetLanguage,
     description: data.description || '',

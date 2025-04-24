@@ -29,9 +29,9 @@ export enum QuestionType {
   }
   
   export interface QuizResultSummary {
-    correct: number;
-    incorrect: number;
-    total: number;
+    correctCount: number;
+    incorrectCount: number;
+    totalCount: number;
     scorePercent: number;
     durationSeconds?: number;
   }
