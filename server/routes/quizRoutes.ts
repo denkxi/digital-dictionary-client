@@ -8,6 +8,7 @@ import {
   QuestionType,
   UserDictionary,
 } from "../types.ts";
+import { v4 as uuid } from "uuid";
 
 const router = express.Router();
 
@@ -24,23 +25,18 @@ type QuizSubmission = {
 // Create a new quiz
 router.post("/", authenticate, async (req, res) => {
   const userId = (req as any).userId;
-  const { questionType, wordCount } = req.body;
-  const dictionaryId = Number(req.body.dictionaryId);
-  console.log(dictionaryId, questionType, wordCount);
+  const { dictionaryId, questionType, wordCount } = req.body;
   if (!dictionaryId || !questionType || !wordCount) {
     return res.status(400).json({ error: "Missing required fields" });
   }
-  
   
   // Check if user owns the dictionary
   const userDictionaries = await readJSON<UserDictionary[]>(
     "userDictionaries.json"
   );
-  
   const hasAccess = userDictionaries.some(
     (ud) => ud.userId === userId && ud.dictionaryId === dictionaryId
   );
-
   if (!hasAccess) {
     return res
       .status(403)
@@ -63,7 +59,7 @@ router.post("/", authenticate, async (req, res) => {
   const quizzes = await readJSON<Quiz[]>("quizzes.json");
   const questions = await readJSON<Question[]>("questions.json");
 
-  const newQuizId = (quizzes.at(-1)?.id ?? 0) + 1;
+  const newQuizId = uuid();
   const createdAt = new Date().toISOString();
 
   const newQuiz: Quiz = {
@@ -75,7 +71,7 @@ router.post("/", authenticate, async (req, res) => {
     createdAt,
   };
 
-  const generatedQuestions: Question[] = selectedWords.map((word, i) => {
+  const generatedQuestions: Question[] = selectedWords.map(word => {
     let actualType: QuestionType =
       questionType === QuestionType.Mixed ? randomQuestionType() : questionType;
 
@@ -100,7 +96,7 @@ router.post("/", authenticate, async (req, res) => {
     const choices = generateChoices(correctAnswer, eligibleWords, actualType);
 
     return {
-      id: (questions.at(-1)?.id ?? 0) + 1 + i,
+      id: uuid(),
       quizId: newQuizId,
       wordId: word.id,
       type: actualType,
@@ -175,11 +171,11 @@ function generateChoices(
 // Submit quiz answers
 router.post("/:quizId/submit", authenticate, async (req, res) => {
   const userId = (req as any).userId;
-  const quizId = Number(req.params.quizId);
+  const quizId = req.params.quizId; 
   const { answers } = req.body;
 
-  if (!Array.isArray(answers) || answers.length === 0) {
-    return res.status(400).json({ error: "No answers provided" });
+  if (!Array.isArray(answers) || answers.length === 0) { // todo: instead of checking if length is not 0, check if amount of answers is the same as quiz.wordCount
+    return res.status(400).json({ error: "No answers provided or not all the questions were answered" });
   }
 
   const quizzes = await readJSON<Quiz[]>("quizzes.json");
@@ -243,7 +239,7 @@ router.post("/:quizId/submit", authenticate, async (req, res) => {
 // Get quiz result
 router.get('/:quizId/result', authenticate, async (req, res) => {
   const userId = (req as any).userId;
-  const quizId = Number(req.params.quizId);
+  const quizId = req.params.quizId;
 
   const quizzes = await readJSON<Quiz[]>('quizzes.json');
   const questions = await readJSON<Question[]>('questions.json');

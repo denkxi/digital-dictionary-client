@@ -5,7 +5,7 @@ import { QuestionType } from '../types/quizTypes';
 import { useNavigate } from 'react-router-dom';
 
 type FormValues = {
-  dictionaryId: number;
+  dictionaryId: string;
   questionType: QuestionType;
   wordCount: number;
 };
@@ -17,7 +17,7 @@ type Props = {
 export default function NewQuizModal({ onClose }: Props) {
   const methods = useForm<FormValues>({
     defaultValues: {
-      dictionaryId: 0,
+      dictionaryId: '',
       questionType: QuestionType.Mixed,
       wordCount: 5
     }
@@ -54,7 +54,7 @@ export default function NewQuizModal({ onClose }: Props) {
           <h2 className="text-xl font-semibold text-text">Create a Quiz</h2>
 
           <select {...register('dictionaryId', { required: true })} className="input w-full">
-            <option value={0} disabled>Select dictionary</option>
+            <option value={''} disabled>Select dictionary</option>
             {dictionaries.map(dictionary => (
               <option key={dictionary.id} value={dictionary.id}>
                 {dictionary.name} ({dictionary.sourceLanguage} → {dictionary.targetLanguage})

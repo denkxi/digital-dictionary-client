@@ -1,8 +1,10 @@
 export interface WordCategory {
-    id: number;
+    id: string;
     name: string;
     description?: string;
-    createdBy: number;
+    createdBy: string;
     createdAt: string;
   }
+
+  export type NewWordCategory = Omit<WordCategory, 'id' | 'createdAt' | 'createdBy'>;
   

@@ -8,7 +8,7 @@ export const wordApi = createApi({
   tagTypes: ['Word'],
   endpoints: (builder) => ({
     // GET /words?dictionaryId=:id
-    getWordsByDictionary: builder.query<Word[], number>({
+    getWordsByDictionary: builder.query<Word[], string>({
       query: (dictionaryId) => ({
         url: `/words?dictionaryId=${dictionaryId}`,
         method: 'GET',
@@ -27,7 +27,7 @@ export const wordApi = createApi({
     }),
 
     // DELETE /words/:id
-    deleteWord: builder.mutation<{ id: number }, number>({
+    deleteWord: builder.mutation<{ id: string }, string>({
       query: (id) => ({
         url: `/words/${id}`,
         method: 'DELETE',
@@ -36,7 +36,7 @@ export const wordApi = createApi({
     }),
 
     // PUT /words/:id
-    updateWord: builder.mutation<Word, Partial<Word> & { id: number }>({
+    updateWord: builder.mutation<Word, Partial<Word> & { id: string }>({
       query: ({ id, ...body }) => ({
         url: `/words/${id}`,
         method: 'PUT',

@@ -9,7 +9,7 @@ export const quizApi = createApi({
   endpoints: (builder) => ({
     // Start a new quiz
     createQuiz: builder.mutation<{ quiz: Quiz; questions: Question[] }, {
-      dictionaryId: number;
+      dictionaryId: string;
       questionType: QuestionType;
       wordCount: number;
     }>({
@@ -26,8 +26,8 @@ export const quizApi = createApi({
       result: QuizResultSummary;
       questions: Question[];
     }, {
-      quizId: number;
-      answers: { questionId: number; answer: string }[];
+      quizId: string;
+      answers: { questionId: string; answer: string }[];
     }>({
       query: ({ quizId, answers }) => ({
         url: `/quizzes/${quizId}/submit`,
@@ -41,7 +41,7 @@ export const quizApi = createApi({
     getQuizResult: builder.query<{
       quiz: Quiz;
       questions: Question[];
-    }, number>({
+    }, string>({
       query: (quizId) => ({
         url: `/quizzes/${quizId}/result`,
         method: 'GET'

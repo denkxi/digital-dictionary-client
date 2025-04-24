@@ -1,14 +1,15 @@
 export interface Word {
-  id: number;
+  id: string;
   writing: string;
   translation: string;
   pronunciation?: string;
-  description?: string;
+  definition?: string;
+  useExample?: string;
   wordClass?: WordClass;
   isStarred: boolean;
   isLearned: boolean;
-  dictionaryId: number;
-  categoryId?: number;
+  dictionaryId: string;
+  categoryId?: string;
   createdAt: string;
 }
 

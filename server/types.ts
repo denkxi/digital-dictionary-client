@@ -1,24 +1,24 @@
 export interface User {
-  id: number;
+  id: string;
   name: string;
   email: string;
   passwordHash: string;
 }
 
 export interface Dictionary {
-  id: number;
+  id: string;
   name: string;
   sourceLanguage: string;
   targetLanguage: string;
   description?: string;
-  createdBy: number;
+  createdBy: string;
   createdAt: string;
 }
 
 export interface UserDictionary {
-  id: number;
-  userId: number;
-  dictionaryId: number;
+  id: string;
+  userId: string;
+  dictionaryId: string;
 }
 
 export enum WordClass {
@@ -31,24 +31,25 @@ export enum WordClass {
 }
 
 export interface WordCategory {
-  id: number;
+  id: string;
   name: string;
   description?: string;
-  createdBy: number;
+  createdBy: string;
   createdAt: string;
 }
 
 export interface Word {
-  id: number;
+  id: string;
   writing: string;
   translation: string;
   pronunciation?: string;
-  description?: string;
+  definition?: string;
+  useExample?: string;
   wordClass?: WordClass;
   isStarred: boolean;
   isLearned: boolean;
-  dictionaryId: number;
-  categoryId?: number;
+  dictionaryId: string;
+  categoryId?: string;
   createdAt: string;
 }
 
@@ -61,7 +62,7 @@ export interface QuizResultSummary {
 }
 
 // export interface QuizPreset {
-//   id: number;
+//   id: string;
 //   name: string; // "Only Translations (10 Words)"
 //   userId: number | null; // null = global default
 //   questionType: 'translation' | 'writing' | 'mixed';
@@ -77,9 +78,9 @@ export enum QuestionType {
 }
 
 export interface Quiz {
-  id: number;
-  userId: number;
-  dictionaryId: number;
+  id: string;
+  userId: string;
+  dictionaryId: string;
   questionType: QuestionType;
   wordCount: number;
   createdAt: string;
@@ -88,9 +89,9 @@ export interface Quiz {
 }
 
 export interface Question {
-  id: number;
-  quizId: number;
-  wordId: number;
+  id: string;
+  quizId: string;
+  wordId: string;
   type: QuestionType;
   prompt: string;
   choices: string[];
@@ -100,10 +101,10 @@ export interface Question {
 }
 
 // export interface UserStats {
-//   userId: number;
+//   userId: string;
 //   totalQuizzes: number;
 //   perfectScores: number;
 //   totalMistakes: number;
-//   mostMissedWordIds: number[];
+//   mostMissedWordIds: string[];
 // };
 

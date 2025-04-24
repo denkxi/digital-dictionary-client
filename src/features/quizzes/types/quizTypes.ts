@@ -6,9 +6,9 @@ export enum QuestionType {
   }
   
   export interface Quiz {
-    id: number;
-    userId: number;
-    dictionaryId: number;
+    id: string;
+    userId: string;
+    dictionaryId: string;
     questionType: QuestionType;
     wordCount: number;
     createdAt: string;
@@ -17,9 +17,9 @@ export enum QuestionType {
   }
   
   export interface Question {
-    id: number;
-    quizId: number;
-    wordId: number;
+    id: string;
+    quizId: string;
+    wordId: string;
     type: QuestionType;
     prompt: string;
     choices: string[];

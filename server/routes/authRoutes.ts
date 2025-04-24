@@ -4,6 +4,7 @@ import { readJSON, writeJSON } from '../utils/db.ts';
 import { generateAccessToken, generateRefreshToken } from '../utils/authMiddleware.ts';
 import { User } from '../types.ts';
 import jwt from 'jsonwebtoken';
+import { v4 as uuid } from 'uuid';
 
 const router = express.Router();
 const SALT_ROUNDS = 10;
@@ -25,7 +26,7 @@ router.post('/register', async (req, res) => {
   const passwordHash = await bcrypt.hash(password, SALT_ROUNDS);
 
   const newUser: User = {
-    id: (users.at(-1)?.id ?? 0) + 1,
+    id: uuid(),
     name,
     email,
     passwordHash
@@ -41,7 +42,7 @@ router.post('/register', async (req, res) => {
     httpOnly: true,
     sameSite: 'strict',
     secure: false,
-    maxAge: 7 * 24 * 60 * 60 * 1000
+    maxAge: 7 * 24 * 60 * 60 * 1000 // week
   });
 
   res.status(201).json({ user: { id: newUser.id, name, email }, token });
@@ -82,7 +83,7 @@ router.post('/refresh', async (req, res) => {
   if (!refreshToken) return res.sendStatus(401);
 
   try {
-    const payload = jwt.verify(refreshToken, JWT_SECRET) as { userId: number };
+    const payload = jwt.verify(refreshToken, JWT_SECRET) as { userId: string };
 
     const newAccessToken = generateAccessToken(payload.userId);
     const newRefreshToken = generateRefreshToken(payload.userId);

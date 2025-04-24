@@ -1,2 +1,50 @@
 [
+  {
+    "id": "8f94a71e-8f5a-472f-9247-d2f8e88769ea",
+    "writing": "車",
+    "translation": "Car",
+    "pronunciation": "Kuruma",
+    "definition": "A four-wheeled road vehicle",
+    "wordClass": "Noun",
+    "isStarred": false,
+    "isLearned": false,
+    "dictionaryId": "6aa612f8-9cdc-416a-b306-880facff090f",
+    "createdAt": "2025-04-24T15:52:57.415Z"
+  },
+  {
+    "id": "c555b2ee-b795-4238-8a7d-c93623d7ab07",
+    "writing": "言葉",
+    "translation": "Word",
+    "pronunciation": "Kotoba",
+    "definition": "A single distinct meaningful element of speech or writing",
+    "wordClass": "Noun",
+    "isStarred": false,
+    "isLearned": false,
+    "dictionaryId": "6aa612f8-9cdc-416a-b306-880facff090f",
+    "createdAt": "2025-04-24T15:53:37.830Z"
+  },
+  {
+    "id": "c4ad9f06-fde0-483d-8596-c22a8a50054a",
+    "writing": "鮭",
+    "translation": "Salmon",
+    "pronunciation": "Sake",
+    "definition": "A large edible fish",
+    "wordClass": "Noun",
+    "isStarred": false,
+    "isLearned": false,
+    "dictionaryId": "6aa612f8-9cdc-416a-b306-880facff090f",
+    "createdAt": "2025-04-24T15:54:24.336Z"
+  },
+  {
+    "id": "594347a6-6445-44a7-aaad-4b2d3c914c66",
+    "writing": "学ぶ",
+    "translation": "To learn",
+    "pronunciation": "Manabu",
+    "definition": "Gain or acquire knowledge of or skill in (something) by study, experience, or being taught",
+    "wordClass": "Verb",
+    "isStarred": false,
+    "isLearned": false,
+    "dictionaryId": "6aa612f8-9cdc-416a-b306-880facff090f",
+    "createdAt": "2025-04-24T15:58:34.689Z"
+  }
 ]
