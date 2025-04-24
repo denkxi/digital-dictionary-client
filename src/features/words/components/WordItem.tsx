@@ -1,9 +1,7 @@
+import { Word } from "../types/Word";
+
 type Props = {
-    word: {
-      id: number;
-      writing: string;
-      translation: string;
-    };
+    word: Word
   };
   
   export default function WordItem({ word }: Props) {

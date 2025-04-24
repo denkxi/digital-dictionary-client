@@ -2,6 +2,7 @@ import express from 'express';
 import { authenticate } from '../utils/authMiddleware.ts';
 import { Dictionary, UserDictionary } from '../types.ts';
 import { readJSON, writeJSON } from '../utils/db.ts';
+import { v4 as uuid } from 'uuid';
 
 const router = express.Router();
 
@@ -36,7 +37,8 @@ router.post('/', authenticate, async (req, res) => {
   const userDictionaries = await readJSON<UserDictionary[]>('userDictionaries.json');
 
   const newDict: Dictionary = {
-    id: (dictionaries.at(-1)?.id ?? 0) + 1,
+    id: uuid(),
+    name: data.name,
     sourceLanguage: data.sourceLanguage,
     targetLanguage: data.targetLanguage,
     description: data.description || '',
@@ -46,7 +48,7 @@ router.post('/', authenticate, async (req, res) => {
 
   dictionaries.push(newDict);
   userDictionaries.push({
-    id: (userDictionaries.at(-1)?.id ?? 0) + 1,
+    id: uuid(),
     userId,
     dictionaryId: newDict.id
   });

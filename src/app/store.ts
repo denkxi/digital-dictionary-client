@@ -1,16 +1,17 @@
-import { combineReducers, configureStore } from '@reduxjs/toolkit';
-import { wordCategoryApi } from '../features/wordCategories/services/wordCategoryApi';
-import { authApi } from '../features/auth/services/authApi';
-import { dictionaryApi } from '../features/dictionaries/services/dictionaryApi';
-import { wordApi } from '../features/words/services/wordApi';
-import { persistReducer, persistStore } from 'redux-persist';
-import authReducer from '../features/auth/slices/authSlice';
-import storage from 'redux-persist/lib/storage';
+import { combineReducers, configureStore } from "@reduxjs/toolkit";
+import { wordCategoryApi } from "../features/wordCategories/services/wordCategoryApi";
+import { authApi } from "../features/auth/services/authApi";
+import { dictionaryApi } from "../features/dictionaries/services/dictionaryApi";
+import { wordApi } from "../features/words/services/wordApi";
+import { quizApi } from "../features/quizzes/services/quizApi";
+import { persistReducer, persistStore } from "redux-persist";
+import authReducer from "../features/auth/slices/authSlice";
+import storage from "redux-persist/lib/storage";
 
 const persistConfig = {
-  key: 'root',
+  key: "root",
   storage,
-  whitelist: ['auth']
+  whitelist: ["auth"],
 };
 
 const appReducer = combineReducers({
@@ -19,10 +20,14 @@ const appReducer = combineReducers({
   [wordCategoryApi.reducerPath]: wordCategoryApi.reducer,
   [dictionaryApi.reducerPath]: dictionaryApi.reducer,
   [wordApi.reducerPath]: wordApi.reducer,
+  [quizApi.reducerPath]: quizApi.reducer,
 });
 
-const rootReducer = (state: ReturnType<typeof appReducer> | undefined, action: any) => {
-  if (action.type === 'LOGOUT_CLEANUP') {
+const rootReducer = (
+  state: ReturnType<typeof appReducer> | undefined,
+  action: any
+) => {
+  if (action.type === "LOGOUT_CLEANUP") {
     state = undefined;
   }
 
@@ -35,8 +40,14 @@ export const store = configureStore({
   reducer: persistedReducer,
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
-      serializableCheck: false
-    }).concat(wordCategoryApi.middleware, authApi.middleware, dictionaryApi.middleware, wordApi.middleware),
+      serializableCheck: false,
+    }).concat(
+      wordCategoryApi.middleware,
+      authApi.middleware,
+      dictionaryApi.middleware,
+      wordApi.middleware,
+      quizApi.middleware
+    ),
 });
 
 export const persistor = persistStore(store);

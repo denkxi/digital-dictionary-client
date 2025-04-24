@@ -1,24 +1,22 @@
 import { useNavigate } from "react-router-dom";
+import { Dictionary } from "../types/Dictionary";
 
 type Props = {
-  dictionary: {
-    id: number;
-    sourceLanguage: string;
-    targetLanguage: string;
-    description?: string;
-    createdAt: string;
-  };
+  dictionary: Dictionary;
 };
 
 export default function DictionaryCard({ dictionary }: Props) {
   const navigate = useNavigate();
-  const { sourceLanguage, targetLanguage, description, createdAt } = dictionary;
+  const { name, sourceLanguage, targetLanguage, description, createdAt } = dictionary;
 
   return (
     <div 
     onClick={() => navigate(`/dictionaries/${dictionary.id}`)}
     className="border border-primary-1 rounded-lg p-4 shadow-sm bg-white hover:shadow-md cursor-pointer transition">
-      <div className="text-lg font-semibold text-text mb-1">
+      <div className="text-2xl font-semibold text-text mb-1">
+        {name}
+      </div>
+      <div className="text-lg font-semibold text-text/80 mb-1">
         {sourceLanguage} → {targetLanguage}
       </div>
       {description && (

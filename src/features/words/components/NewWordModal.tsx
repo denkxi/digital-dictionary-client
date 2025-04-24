@@ -5,7 +5,7 @@ import { WordClass } from "../types/Word";
 import { useGetWordCategoriesQuery } from "../../wordCategories/services/wordCategoryApi";
 
 type Props = {
-  dictionaryId: number;
+  dictionaryId: string;
   onClose: () => void;
 };
 
@@ -13,11 +13,12 @@ const defaultForm: NewWord = {
   writing: "",
   translation: "",
   pronunciation: "",
-  description: "",
+  definition: "",
+  useExample: "",
   wordClass: undefined,
   isStarred: false,
   isLearned: false,
-  dictionaryId: 0,
+  dictionaryId: '',
   categoryId: undefined,
 };
 
@@ -89,7 +90,15 @@ export default function NewWordModal({ dictionaryId, onClose }: Props) {
         <textarea
           name="description"
           placeholder="Description (optional)"
-          value={form.description}
+          value={form.definition}
+          onChange={handleChange}
+          className="input w-full resize-none"
+        />
+
+        <textarea
+          name="useExample"
+          placeholder="Example of use (optional)"
+          value={form.useExample}
           onChange={handleChange}
           className="input w-full resize-none"
         />

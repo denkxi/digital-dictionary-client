@@ -1,6 +1,6 @@
 import { createApi } from '@reduxjs/toolkit/query/react';
 import axiosBaseQuery from '../../../shared/utils/axiosBaseQuery';
-import { WordCategory } from '../types/WordCategory';
+import { NewWordCategory, WordCategory } from '../types/WordCategory';
 
 export const wordCategoryApi = createApi({
   reducerPath: 'wordCategoryApi',
@@ -17,7 +17,7 @@ export const wordCategoryApi = createApi({
     }),
 
     // POST /word-categories
-    createWordCategory: builder.mutation<WordCategory, Partial<Omit<WordCategory, 'id' | 'createdAt'>>>({
+    createWordCategory: builder.mutation<WordCategory, NewWordCategory>({
       query: (body) => ({
         url: '/word-categories',
         method: 'POST',
@@ -27,7 +27,7 @@ export const wordCategoryApi = createApi({
     }),
 
     // (optional) DELETE /word-categories/:id
-    deleteWordCategory: builder.mutation<{ id: number }, number>({
+    deleteWordCategory: builder.mutation<{ id: string }, string>({
       query: (id) => ({
         url: `/word-categories/${id}`,
         method: 'DELETE'
@@ -36,7 +36,7 @@ export const wordCategoryApi = createApi({
     }),
 
     // (optional) PUT /word-categories/:id
-    updateWordCategory: builder.mutation<WordCategory, Partial<WordCategory> & { id: number }>({
+    updateWordCategory: builder.mutation<WordCategory, Partial<WordCategory> & { id: string }>({
       query: ({ id, ...body }) => ({
         url: `/word-categories/${id}`,
         method: 'PUT',

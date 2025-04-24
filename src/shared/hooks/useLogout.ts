@@ -11,7 +11,7 @@ export const useLogout = () => {
   const handleLogout = async () => {
       dispatch(logout());
       dispatch(resetStore());
-      await persistor.purge(); 
+      await persistor.purge();
       navigate('/');
     };
 

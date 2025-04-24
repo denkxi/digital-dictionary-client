@@ -7,13 +7,13 @@ import { useGetWordsByDictionaryQuery } from "./services/wordApi";
 
 export default function WordList() {
   const { dictionaryId } = useParams();
-  const parsedId = Number(dictionaryId);
+  if (!dictionaryId) return null; // todo: add proper error handling
   const [isModalOpen, setIsModalOpen] = useState(false);
   const {
     data: words = [],
     isLoading,
     isError,
-  } = useGetWordsByDictionaryQuery(parsedId);
+  } = useGetWordsByDictionaryQuery(dictionaryId);
 
   return (
     <div>
@@ -41,7 +41,7 @@ export default function WordList() {
 
       {isModalOpen && (
         <NewWordModal
-          dictionaryId={parsedId}
+          dictionaryId={dictionaryId}
           onClose={() => setIsModalOpen(false)}
         />
       )}

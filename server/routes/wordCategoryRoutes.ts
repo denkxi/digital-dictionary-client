@@ -2,6 +2,7 @@ import express from 'express';
 import { WordCategory } from '../types.ts';
 import { readJSON, writeJSON } from '../utils/db.ts';
 import { authenticate } from '../utils/authMiddleware.ts';
+import { v4 as uuid } from 'uuid';
 
 const router = express.Router();
 
@@ -21,7 +22,7 @@ router.post('/', authenticate, async (req, res) => {
   const categories = await readJSON<WordCategory[]>('categories.json');
 
   const newCategory: WordCategory = {
-    id: (categories.at(-1)?.id ?? 0) + 1,
+    id: uuid(),
     name,
     description: req.body.description || '',
     createdBy: userId,

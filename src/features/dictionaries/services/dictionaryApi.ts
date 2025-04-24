@@ -35,7 +35,7 @@ export const dictionaryApi = createApi({
     }),
 
     // DELETE /dictionaries/:id
-    deleteDictionary: builder.mutation<{ id: number }, number>({
+    deleteDictionary: builder.mutation<{ id: string }, string>({
       query: (id) => ({
         url: `/dictionaries/${id}`,
         method: 'DELETE',

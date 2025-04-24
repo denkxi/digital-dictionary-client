@@ -2,12 +2,13 @@ import express from 'express';
 import { Word } from '../types.ts';
 import { readJSON, writeJSON } from '../utils/db.ts';
 import { authenticate } from '../utils/authMiddleware.ts';
+import { v4 as uuid } from 'uuid';
 
 const router = express.Router();
 
 router.get('/', authenticate, async (req, res) => {
-  const dictionaryId = Number(req.query.dictionaryId);
-  if (!dictionaryId || isNaN(dictionaryId)) {
+  const dictionaryId = req.query.dictionaryId;
+  if (!dictionaryId) {
     return res.status(400).json({ error: 'Missing dictionaryId' });
   }
   const words = await readJSON<Word[]>('words.json');
@@ -22,11 +23,12 @@ router.post('/', authenticate, async (req, res) => {
 
   const words = await readJSON<Word[]>('words.json');
   const newWord: Word = {
-    id: (words.at(-1)?.id ?? 0) + 1,
+    id: uuid(),
     writing: data.writing,
     translation: data.translation,
     pronunciation: data.pronunciation || '',
-    description: data.description || '',
+    definition: data.description || '',
+    useExample: data.useExample || '',
     wordClass: data.wordClass || undefined,
     isStarred: data.isMarked ?? false,
     isLearned: false,

@@ -1,11 +1,12 @@
 TODO:
-Auth
-- Auto-logout on 401
-- Add token expiration handling
+Quiz
+- Quiz history
+- Unfinished quizzes
+- Complete quizzes by category?
+- When creating quiz and wordCount is bigger than amount of word in the quiz - notify about that (not enough words in the quiz)
 
 Categories
 - Delete/edit category
-- Dropdown with categories in word creation
 - Sort/filter/pagination
 - Improve design (like adjustible flex structure)
 
@@ -15,9 +16,9 @@ Dictionaries
 - Improve design
 
 Words
-- Fetch categories to show in dropdown
 - Enable editing or deleting words
 - Filtering, searching, pagination, sorting
+- Improve design (like adjustible flex structure)
 
 Dashboard
 - User stats (word counts, learned %, etc.)
@@ -25,9 +26,8 @@ Dashboard
 - Dynamic content based on auth state
 
 Other
-- Implement ract hook form with validation (reusable validation message element)
-- Reusable form components (input, textarea, select, checkbox)
-- ?Reusable modal component
+- Implement react hook form with validation (reusable validation message element)
+- Reusable components (input, textarea, select, checkbox, modal, buttons)
 
 
 # React + TypeScript + Vite
