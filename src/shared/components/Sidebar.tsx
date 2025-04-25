@@ -6,7 +6,7 @@ const menuItems = [
   { name: 'Dashboard', path: '/' },
   { name: 'Dictionaries', path: '/dictionaries' },
   { name: 'Categories', path: '/word-categories' },
-  { name: 'Tests', path: '/tests' },
+  { name: 'Quizzes', path: '/quizzes' },
   { name: 'Profile', path: '/profile' }
 ];
 
