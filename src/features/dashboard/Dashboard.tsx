@@ -38,10 +38,10 @@ export default function Dashboard() {
             View Dictionaries
           </Link>
           <Link
-            to="/tests"
+            to="/quizzes"
             className="block bg-primary-2 hover:bg-primary-1 text-center py-3 rounded shadow-sm font-medium"
           >
-            Complete Tests
+            Complete Quizzes
           </Link>
         </div>
       ) : (

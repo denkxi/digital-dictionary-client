@@ -7,6 +7,7 @@ import {
   Word,
   QuestionType,
   UserDictionary,
+  Dictionary,
 } from "../types.ts";
 import { v4 as uuid } from "uuid";
 
@@ -17,7 +18,7 @@ const MIN_WORDS = 2; // todo: move to shared constants
 
 type QuizSubmission = {
   answers: {
-    questionId: number;
+    questionId: string;
     answer: string;
   }[];
 };
@@ -29,7 +30,7 @@ router.post("/", authenticate, async (req, res) => {
   if (!dictionaryId || !questionType || !wordCount) {
     return res.status(400).json({ error: "Missing required fields" });
   }
-  
+
   // Check if user owns the dictionary
   const userDictionaries = await readJSON<UserDictionary[]>(
     "userDictionaries.json"
@@ -71,7 +72,7 @@ router.post("/", authenticate, async (req, res) => {
     createdAt,
   };
 
-  const generatedQuestions: Question[] = selectedWords.map(word => {
+  const generatedQuestions: Question[] = selectedWords.map((word) => {
     let actualType: QuestionType =
       questionType === QuestionType.Mixed ? randomQuestionType() : questionType;
 
@@ -168,14 +169,113 @@ function generateChoices(
   return choices;
 }
 
+// Get all quizzes for a user
+router.get("/", authenticate, async (req, res) => {
+  const userId = (req as any).userId;
+  const quizzes = await readJSON<Quiz[]>("quizzes.json");
+  const dictionaries = await readJSON<Dictionary[]>("dictionaries.json");
+
+  const userQuizzes = quizzes
+    .filter((q) => q.userId === userId)
+    .map((quiz) => {
+      const dictionary = dictionaries.find(d => d.id === quiz.dictionaryId);
+      return {
+        ...quiz,
+        dictionaryName: dictionary?.name || "Unknown Dictionary"
+      };
+    })
+    .sort(
+      (a, b) =>
+        new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+    );
+
+  res.json(userQuizzes);
+});
+
+// Get unfinished quizzes for a user
+router.get("/unfinished", authenticate, async (req, res) => {
+  const userId = (req as any).userId;
+  const quizzes = await readJSON<Quiz[]>("quizzes.json");
+  const dictionaries = await readJSON<Dictionary[]>("dictionaries.json");
+
+  const unfinishedQuizzes = quizzes
+    .filter(q => q.userId === userId && !q.completedAt)
+    .map(quiz => {
+      const dictionary = dictionaries.find(d => d.id === quiz.dictionaryId);
+      return {
+        ...quiz,
+        dictionaryName: dictionary?.name || "Unknown Dictionary"
+      };
+    });
+
+  res.json(unfinishedQuizzes);
+});
+
+// Get completed quizzes for a user
+router.get("/completed", authenticate, async (req, res) => {
+  const userId = (req as any).userId;
+  const quizzes = await readJSON<Quiz[]>("quizzes.json");
+  const dictionaries = await readJSON<Dictionary[]>("dictionaries.json");
+
+  const completedQuizzes = quizzes
+    .filter(q => q.userId === userId && q.completedAt)
+    .map(quiz => {
+      const dictionary = dictionaries.find(d => d.id === quiz.dictionaryId);
+      return {
+        ...quiz,
+        dictionaryName: dictionary?.name || "Unknown Dictionary"
+      };
+    });
+
+  res.json(completedQuizzes);
+});
+
+// Get a quiz by ID
+router.get("/:quizId", authenticate, async (req, res) => {
+  const userId = (req as any).userId;
+  const quizId = req.params.quizId;
+
+  const quizzes = await readJSON<Quiz[]>("quizzes.json");
+  const questions = await readJSON<Question[]>("questions.json");
+  const dictionaries = await readJSON<Dictionary[]>("dictionaries.json");
+
+  const quiz = quizzes.find((q) => q.id === quizId && q.userId === userId);
+
+  if (!quiz) {
+    return res.status(404).json({ error: "Quiz not found" });
+  }
+
+  if (quiz.completedAt) {
+    return res.status(400).json({ error: "Quiz already completed" });
+  }
+
+  const dictionary = dictionaries.find((d) => d.id === quiz.dictionaryId);
+  if (!dictionary) {
+    return res.status(404).json({ error: "Dictionary not found" });
+  }
+
+  const quizQuestions = questions.filter((q) => q.quizId === quizId);
+
+  res.json({
+    quiz: {
+      ...quiz,
+      dictionaryName: dictionary.name,
+    },
+    questions: quizQuestions,
+  });
+});
+
 // Submit quiz answers
 router.post("/:quizId/submit", authenticate, async (req, res) => {
   const userId = (req as any).userId;
-  const quizId = req.params.quizId; 
+  const quizId = req.params.quizId;
   const { answers } = req.body;
 
-  if (!Array.isArray(answers) || answers.length === 0) { // todo: instead of checking if length is not 0, check if amount of answers is the same as quiz.wordCount
-    return res.status(400).json({ error: "No answers provided or not all the questions were answered" });
+  if (!Array.isArray(answers) || answers.length === 0) {
+    // todo: instead of checking if length is not 0, check if amount of answers is the same as quiz.wordCount
+    return res.status(400).json({
+      error: "No answers provided or not all the questions were answered",
+    });
   }
 
   const quizzes = await readJSON<Quiz[]>("quizzes.json");
@@ -237,30 +337,38 @@ router.post("/:quizId/submit", authenticate, async (req, res) => {
 });
 
 // Get quiz result
-router.get('/:quizId/result', authenticate, async (req, res) => {
+router.get("/:quizId/result", authenticate, async (req, res) => {
   const userId = (req as any).userId;
   const quizId = req.params.quizId;
 
-  const quizzes = await readJSON<Quiz[]>('quizzes.json');
-  const questions = await readJSON<Question[]>('questions.json');
+  const quizzes = await readJSON<Quiz[]>("quizzes.json");
+  const questions = await readJSON<Question[]>("questions.json");
+  const dictionaries = await readJSON<Dictionary[]>("dictionaries.json");
 
-  const quiz = quizzes.find(q => q.id === quizId && q.userId === userId);
+  const quiz = quizzes.find((q) => q.id === quizId && q.userId === userId);
 
   if (!quiz) {
-    return res.status(404).json({ error: 'Quiz not found' });
+    return res.status(404).json({ error: "Quiz not found" });
   }
 
   if (!quiz.completedAt || !quiz.result) {
-    return res.status(400).json({ error: 'Quiz not yet completed' });
+    return res.status(400).json({ error: "Quiz not yet completed" });
   }
 
-  const quizQuestions = questions.filter(q => q.quizId === quizId);
+  const dictionary = dictionaries.find((d) => d.id === quiz.dictionaryId);
+  if (!dictionary) {
+    return res.status(404).json({ error: "Dictionary not found" });
+  }
+
+  const quizQuestions = questions.filter((q) => q.quizId === quizId);
 
   res.json({
-    quiz,
-    questions: quizQuestions
+    quiz: {
+      ...quiz,
+      dictionaryName: dictionary.name,
+    },
+    questions: quizQuestions,
   });
 });
-
 
 export default router;

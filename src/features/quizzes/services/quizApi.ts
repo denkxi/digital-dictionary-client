@@ -1,68 +1,112 @@
-import { createApi } from '@reduxjs/toolkit/query/react';
-import axiosBaseQuery from '../../../shared/utils/axiosBaseQuery';
-import { Quiz, Question, QuizResultSummary, QuestionType } from '../types/quizTypes';
+import { createApi } from "@reduxjs/toolkit/query/react";
+import axiosBaseQuery from "../../../shared/utils/axiosBaseQuery";
+import {
+  Quiz,
+  Question,
+  QuizResultSummary,
+  QuestionType,
+  QuizWithName,
+} from "../types/quizTypes";
 
 export const quizApi = createApi({
-  reducerPath: 'quizApi',
+  reducerPath: "quizApi",
   baseQuery: axiosBaseQuery(),
-  tagTypes: ['Quiz'],
+  tagTypes: ["Quiz"],
   endpoints: (builder) => ({
     // Start a new quiz
-    createQuiz: builder.mutation<{ quiz: Quiz; questions: Question[] }, {
-      dictionaryId: string;
-      questionType: QuestionType;
-      wordCount: number;
-    }>({
+    createQuiz: builder.mutation<
+      { quiz: Quiz; questions: Question[] },
+      {
+        dictionaryId: string;
+        questionType: QuestionType;
+        wordCount: number;
+      }
+    >({
       query: (body) => ({
-        url: '/quizzes',
-        method: 'POST',
-        data: body
+        url: "/quizzes",
+        method: "POST",
+        data: body,
       }),
-      invalidatesTags: ['Quiz']
+      invalidatesTags: ["Quiz"],
+    }),
+
+    getQuizById: builder.query<
+      { quiz: QuizWithName; questions: Question[] },
+      string
+    >({
+      query: (quizId) => ({
+        url: `/quizzes/${quizId}`,
+        method: "GET",
+      }),
     }),
 
     // Submit quiz answers
-    submitQuiz: builder.mutation<{
-      result: QuizResultSummary;
-      questions: Question[];
-    }, {
-      quizId: string;
-      answers: { questionId: string; answer: string }[];
-    }>({
+    submitQuiz: builder.mutation<
+      {
+        result: QuizResultSummary;
+        questions: Question[];
+      },
+      {
+        quizId: string;
+        answers: { questionId: string; answer: string }[];
+      }
+    >({
       query: ({ quizId, answers }) => ({
         url: `/quizzes/${quizId}/submit`,
-        method: 'POST',
-        data: { answers }
+        method: "POST",
+        data: { answers },
       }),
-      invalidatesTags: ['Quiz']
+      invalidatesTags: ["Quiz"],
     }),
 
     // View quiz result
-    getQuizResult: builder.query<{
-      quiz: Quiz;
-      questions: Question[];
-    }, string>({
+    getQuizResult: builder.query<
+      {
+        quiz: QuizWithName;
+        questions: Question[];
+      },
+      string
+    >({
       query: (quizId) => ({
         url: `/quizzes/${quizId}/result`,
-        method: 'GET'
+        method: "GET",
       }),
-      providesTags: ['Quiz']
+      providesTags: ["Quiz"],
     }),
 
-    // Get user’s quiz history (to implement later)
-    getQuizHistory: builder.query<Quiz[], void>({
+    // All quizzes
+    getAllQuizzes: builder.query<QuizWithName[], void>({
       query: () => ({
-        url: '/quizzes/history',
-        method: 'GET'
+        url: "/quizzes",
+        method: "GET",
       }),
-      providesTags: ['Quiz']
-    })
-  })
+      providesTags: ["Quiz"],
+    }),
+    // Unfinished only
+    getUnfinishedQuizzes: builder.query<QuizWithName[], void>({
+      query: () => ({
+        url: "/quizzes/unfinished",
+        method: "GET",
+      }),
+      providesTags: ["Quiz"],
+    }),
+    // Completed only
+    getCompletedQuizzes: builder.query<QuizWithName[], void>({
+      query: () => ({
+        url: "/quizzes/completed",
+        method: "GET",
+      }),
+      providesTags: ["Quiz"],
+    }),
+  }),
 });
 
 export const {
   useCreateQuizMutation,
+  useGetQuizByIdQuery,
   useSubmitQuizMutation,
   useGetQuizResultQuery,
-  useGetQuizHistoryQuery
+  useGetAllQuizzesQuery,
+  useGetUnfinishedQuizzesQuery,
+  useGetCompletedQuizzesQuery,
 } = quizApi;

@@ -1,33 +1,44 @@
 TODO:
 Quiz
-- Quiz history
-- Unfinished quizzes
 - Complete quizzes by category?
 - When creating quiz and wordCount is bigger than amount of word in the quiz - notify about that (not enough words in the quiz)
+- Make other question types ("TranslationChoice", "TranslationInput", "UseExampleFill")
+- Render right sentence for each question in the quiz and in the result page
+- Go back to previous question?
+- Quiz timer/duraion?
+- Quiz difficulties?
 
 Categories
 - Delete/edit category
 - Sort/filter/pagination
-- Improve design (like adjustible flex structure)
+- Improve design (responsive flex structure)
 
 Dictionaries
 - Delete/edit
 - More details on dictionary cards
 - Improve design
+- Quick button to start quiz
 
 Words
 - Enable editing or deleting words
 - Filtering, searching, pagination, sorting
-- Improve design (like adjustible flex structure)
+- Improve design (responsive flex structure)
+- Add "exclamation" to word classes enum
 
 Dashboard
 - User stats (word counts, learned %, etc.)
 - Recent activity
 - Dynamic content based on auth state
 
+Profile
+- User info
+- Statistics
+
 Other
 - Implement react hook form with validation (reusable validation message element)
-- Reusable components (input, textarea, select, checkbox, modal, buttons)
+- Reusable components (input, textarea, select, checkbox, modal, buttons, spinner, universal error, validation error)
+- Add light transitions and animations
+- Better loading spinners, empty states, and error pages
 
 
 # React + TypeScript + Vite

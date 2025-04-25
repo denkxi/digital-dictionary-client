@@ -15,6 +15,8 @@ export enum QuestionType {
     completedAt?: string;
     result?: QuizResultSummary;
   }
+
+  export type QuizWithName = Quiz & { dictionaryName: string };
   
   export interface Question {
     id: string;
