@@ -30,13 +30,15 @@ export const quizApi = createApi({
       invalidatesTags: ["Quiz"],
     }),
 
-    getQuizById: builder.query<{ quiz: QuizWithName; questions: Question[] }, string>({
+    getQuizById: builder.query<
+      { quiz: QuizWithName; questions: Question[] },
+      string
+    >({
       query: (quizId) => ({
         url: `/quizzes/${quizId}`,
-        method: 'GET',
+        method: "GET",
       }),
     }),
-    
 
     // Submit quiz answers
     submitQuiz: builder.mutation<
@@ -60,7 +62,7 @@ export const quizApi = createApi({
     // View quiz result
     getQuizResult: builder.query<
       {
-        quiz: Quiz;
+        quiz: QuizWithName;
         questions: Question[];
       },
       string
@@ -72,10 +74,26 @@ export const quizApi = createApi({
       providesTags: ["Quiz"],
     }),
 
-    // Get all quizzes for user (metadata only)
-    getUserQuizzes: builder.query<Quiz[], void>({
+    // All quizzes
+    getAllQuizzes: builder.query<QuizWithName[], void>({
       query: () => ({
         url: "/quizzes",
+        method: "GET",
+      }),
+      providesTags: ["Quiz"],
+    }),
+    // Unfinished only
+    getUnfinishedQuizzes: builder.query<QuizWithName[], void>({
+      query: () => ({
+        url: "/quizzes/unfinished",
+        method: "GET",
+      }),
+      providesTags: ["Quiz"],
+    }),
+    // Completed only
+    getCompletedQuizzes: builder.query<QuizWithName[], void>({
+      query: () => ({
+        url: "/quizzes/completed",
         method: "GET",
       }),
       providesTags: ["Quiz"],
@@ -88,5 +106,7 @@ export const {
   useGetQuizByIdQuery,
   useSubmitQuizMutation,
   useGetQuizResultQuery,
-  useGetUserQuizzesQuery,
+  useGetAllQuizzesQuery,
+  useGetUnfinishedQuizzesQuery,
+  useGetCompletedQuizzesQuery,
 } = quizApi;

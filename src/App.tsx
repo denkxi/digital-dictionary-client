@@ -8,6 +8,7 @@ import AuthPage from './features/auth/AuthPage';
 import PrivateRoute from './shared/components/PrivateRoute';
 import QuizPage from './features/quizzes/components/QuizPage';
 import QuizRunner from './features/quizzes/components/QuizRunner';
+import QuizResult from './features/quizzes/components/QuizResult';
 
 export default function App() {
   return (
@@ -21,6 +22,7 @@ export default function App() {
           <Route path="/word-categories" element={<PrivateRoute><WordCategoryList /></PrivateRoute>} />
           <Route path="/quizzes" element={<PrivateRoute><QuizPage /></PrivateRoute>} />
           <Route path="/quizzes/:quizId" element={<PrivateRoute><QuizRunner /></PrivateRoute>} />
+          <Route path="/quizzes/:quizId/result" element={<PrivateRoute><QuizResult /></PrivateRoute>} />
           <Route path="/profile" element={<PrivateRoute><div>Profile</div></PrivateRoute>} />
         </Route>
       </Routes>

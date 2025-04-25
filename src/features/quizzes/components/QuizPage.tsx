@@ -1,4 +1,6 @@
+import CompletedQuizzes from './CompletedQuizzes';
 import NewQuizCard from './NewQuizCard';
+import UnfinishedQuizzes from './UnfinishedQuizzes';
 
 export default function QuizPage() {
   return (
@@ -7,9 +9,8 @@ export default function QuizPage() {
 
       <NewQuizCard />
 
-      {/* Future sections */}
-      {/* <UnfinishedQuizzes /> */}
-      {/* <QuizHistoryPreview /> */}
+      <UnfinishedQuizzes />
+      <CompletedQuizzes />
     </div>
   );
 }

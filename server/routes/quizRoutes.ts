@@ -173,15 +173,61 @@ function generateChoices(
 router.get("/", authenticate, async (req, res) => {
   const userId = (req as any).userId;
   const quizzes = await readJSON<Quiz[]>("quizzes.json");
+  const dictionaries = await readJSON<Dictionary[]>("dictionaries.json");
 
   const userQuizzes = quizzes
     .filter((q) => q.userId === userId)
+    .map((quiz) => {
+      const dictionary = dictionaries.find(d => d.id === quiz.dictionaryId);
+      return {
+        ...quiz,
+        dictionaryName: dictionary?.name || "Unknown Dictionary"
+      };
+    })
     .sort(
       (a, b) =>
         new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
     );
 
   res.json(userQuizzes);
+});
+
+// Get unfinished quizzes for a user
+router.get("/unfinished", authenticate, async (req, res) => {
+  const userId = (req as any).userId;
+  const quizzes = await readJSON<Quiz[]>("quizzes.json");
+  const dictionaries = await readJSON<Dictionary[]>("dictionaries.json");
+
+  const unfinishedQuizzes = quizzes
+    .filter(q => q.userId === userId && !q.completedAt)
+    .map(quiz => {
+      const dictionary = dictionaries.find(d => d.id === quiz.dictionaryId);
+      return {
+        ...quiz,
+        dictionaryName: dictionary?.name || "Unknown Dictionary"
+      };
+    });
+
+  res.json(unfinishedQuizzes);
+});
+
+// Get completed quizzes for a user
+router.get("/completed", authenticate, async (req, res) => {
+  const userId = (req as any).userId;
+  const quizzes = await readJSON<Quiz[]>("quizzes.json");
+  const dictionaries = await readJSON<Dictionary[]>("dictionaries.json");
+
+  const completedQuizzes = quizzes
+    .filter(q => q.userId === userId && q.completedAt)
+    .map(quiz => {
+      const dictionary = dictionaries.find(d => d.id === quiz.dictionaryId);
+      return {
+        ...quiz,
+        dictionaryName: dictionary?.name || "Unknown Dictionary"
+      };
+    });
+
+  res.json(completedQuizzes);
 });
 
 // Get a quiz by ID
@@ -297,6 +343,7 @@ router.get("/:quizId/result", authenticate, async (req, res) => {
 
   const quizzes = await readJSON<Quiz[]>("quizzes.json");
   const questions = await readJSON<Question[]>("questions.json");
+  const dictionaries = await readJSON<Dictionary[]>("dictionaries.json");
 
   const quiz = quizzes.find((q) => q.id === quizId && q.userId === userId);
 
@@ -308,10 +355,18 @@ router.get("/:quizId/result", authenticate, async (req, res) => {
     return res.status(400).json({ error: "Quiz not yet completed" });
   }
 
+  const dictionary = dictionaries.find((d) => d.id === quiz.dictionaryId);
+  if (!dictionary) {
+    return res.status(404).json({ error: "Dictionary not found" });
+  }
+
   const quizQuestions = questions.filter((q) => q.quizId === quizId);
 
   res.json({
-    quiz,
+    quiz: {
+      ...quiz,
+      dictionaryName: dictionary.name,
+    },
     questions: quizQuestions,
   });
 });
