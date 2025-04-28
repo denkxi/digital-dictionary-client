@@ -1,0 +1,37 @@
+type ConfirmDeleteModalProps = {
+    title?: string;
+    description?: string;
+    onConfirm: () => void;
+    onCancel: () => void;
+  };
+  
+  export default function ConfirmDeleteModal({
+    title = 'Confirm Deletion',
+    description = 'Are you sure you want to delete this item?',
+    onConfirm,
+    onCancel,
+  }: ConfirmDeleteModalProps) {
+    return (
+      <div className="fixed inset-0 bg-black/30 flex items-center justify-center z-50">
+        <div className="bg-white p-6 rounded-lg shadow-md w-full max-w-sm space-y-4">
+          <h2 className="text-xl font-semibold text-text">{title}</h2>
+          <p className="text-sm text-gray-600">{description}</p>
+          <div className="flex justify-end gap-2">
+            <button
+              onClick={onCancel}
+              className="px-4 py-2 text-sm bg-accent-2 hover:bg-green-100 rounded"
+            >
+              Cancel
+            </button>
+            <button
+              onClick={onConfirm}
+              className="px-4 py-2 text-sm bg-red-500 hover:bg-red-600 text-white rounded font-medium"
+            >
+              Delete
+            </button>
+          </div>
+        </div>
+      </div>
+    );
+  }
+  

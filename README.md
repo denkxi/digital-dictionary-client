@@ -9,9 +9,8 @@ Quiz
 - Quiz difficulties?
 
 Categories
-- Delete/edit category
 - Sort/filter/pagination
-- Improve design (responsive flex structure)
+- Improve design and responsiveness
 
 Dictionaries
 - Delete/edit
