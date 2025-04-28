@@ -35,4 +35,48 @@ router.post('/', authenticate, async (req, res) => {
   res.status(201).json(newCategory);
 });
 
+// Update a category
+router.put("/:categoryId", authenticate, async (req, res) => {
+  const userId = (req as any).userId;
+  const { categoryId } = req.params;
+  const { name, description } = req.body;
+
+  if (!name) {
+    return res.status(400).json({ error: "Category name is required" });
+  }
+
+  const categories = await readJSON<WordCategory[]>("categories.json");
+
+  const category = categories.find(c => c.id === categoryId && c.createdBy === userId);
+
+  if (!category) {
+    return res.status(404).json({ error: "Category not found" });
+  }
+
+  category.name = name;
+  category.description = description;
+
+  await writeJSON("categories.json", categories);
+
+  res.status(201).json({ message: "Category updated", category });
+});
+
+// Delete a category
+router.delete("/:categoryId", authenticate, async (req, res) => {
+  const userId = (req as any).userId;
+  const { categoryId } = req.params;
+
+  const categories = await readJSON<WordCategory[]>("categories.json");
+  const existing = categories.find(c => c.id === categoryId && c.createdBy === userId);
+
+  if (!existing) {
+    return res.status(404).json({ error: "Category not found" });
+  }
+
+  const updated = categories.filter(c => c.id !== categoryId);
+  await writeJSON("categories.json", updated);
+
+  res.status(200).json({ message: "Category deleted" });
+});
+
 export default router;
