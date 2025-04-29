@@ -13,6 +13,7 @@ export interface Dictionary {
   description?: string;
   createdBy: string;
   createdAt: string;
+  updatedAt?: string;
 }
 
 export interface UserDictionary {

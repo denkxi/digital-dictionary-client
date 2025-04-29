@@ -9,11 +9,12 @@ Quiz
 - Quiz difficulties?
 
 Categories
+- Add form validation with error messages
 - Sort/filter/pagination
 - Improve design and responsiveness
 
 Dictionaries
-- Delete/edit
+- Add form validation with error messages
 - More details on dictionary cards
 - Improve design
 - Quick button to start quiz

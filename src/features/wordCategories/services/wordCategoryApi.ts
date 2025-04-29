@@ -26,14 +26,11 @@ export const wordCategoryApi = createApi({
       invalidatesTags: ["WordCategory"],
     }),
 
-    // PUT /word-categories/:id
-    updateWordCategory: builder.mutation<
-      WordCategory,
-      { id: string; name: string; description?: string }
-    >({
+    // PATCH /word-categories/:id
+    updateWordCategory: builder.mutation<WordCategory, { id: string; name: string; description?: string }>({
       query: ({ id, ...body }) => ({
         url: `/word-categories/${id}`,
-        method: "PUT",
+        method: "PATCH",
         data: body,
       }),
       invalidatesTags: ["WordCategory"],

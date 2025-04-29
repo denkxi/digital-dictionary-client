@@ -36,7 +36,7 @@ router.post('/', authenticate, async (req, res) => {
 });
 
 // Update a category
-router.put("/:categoryId", authenticate, async (req, res) => {
+router.patch("/:categoryId", authenticate, async (req, res) => {
   const userId = (req as any).userId;
   const { categoryId } = req.params;
   const { name, description } = req.body;
