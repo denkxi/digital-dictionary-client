@@ -23,7 +23,7 @@ export default function CategoryModal({ onClose, mode, initialData }: Props) {
       if (mode === 'create') {
         await createCategory(data).unwrap();
       } else if (mode === 'edit' && initialData) {
-        await updateCategory({ id: initialData.id, ...data }).unwrap();
+        await updateCategory({ id: initialData.id, data }).unwrap();
       }
       reset();
       onClose();

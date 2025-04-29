@@ -27,16 +27,16 @@ export const wordCategoryApi = createApi({
     }),
 
     // PATCH /word-categories/:id
-    updateWordCategory: builder.mutation<WordCategory, { id: string; name: string; description?: string }>({
-      query: ({ id, ...body }) => ({
+    updateWordCategory: builder.mutation<WordCategory, { id: string; data: Partial<WordCategory> }>({
+      query: ({ id, data }) => ({
         url: `/word-categories/${id}`,
         method: "PATCH",
-        data: body,
+        data,
       }),
       invalidatesTags: ["WordCategory"],
     }),
 
-    // Delete category
+    // DELETE /word-categories/:id
     deleteWordCategory: builder.mutation<{ id: string }, string>({
       query: (id) => ({
         url: `/word-categories/${id}`,

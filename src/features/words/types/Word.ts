@@ -10,10 +10,11 @@ export interface Word {
   isLearned: boolean;
   dictionaryId: string;
   categoryId?: string;
+  createdBy: string;
   createdAt: string;
 }
 
-export type NewWord = Omit<Word, 'id' | 'createdAt'>;
+export type NewWord = Omit<Word, 'id' | 'createdAt' | 'createdBy'>;
 
 export enum WordClass {
     Noun = 'Noun',
@@ -22,4 +23,5 @@ export enum WordClass {
     Adverb = 'Adverb',
     Phrase = 'Phrase',
     Expression = 'Expression',
+    Exclamation = 'Exclamation',
   }

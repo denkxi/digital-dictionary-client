@@ -39,9 +39,9 @@ router.post('/', authenticate, async (req, res) => {
 router.patch("/:categoryId", authenticate, async (req, res) => {
   const userId = (req as any).userId;
   const { categoryId } = req.params;
-  const { name, description } = req.body;
+  const data = req.body;
 
-  if (!name) {
+  if (!data.name) {
     return res.status(400).json({ error: "Category name is required" });
   }
 
@@ -53,8 +53,7 @@ router.patch("/:categoryId", authenticate, async (req, res) => {
     return res.status(404).json({ error: "Category not found" });
   }
 
-  category.name = name;
-  category.description = description;
+  Object.assign(category, data);
 
   await writeJSON("categories.json", categories);
 
@@ -76,7 +75,7 @@ router.delete("/:categoryId", authenticate, async (req, res) => {
   const updated = categories.filter(c => c.id !== categoryId);
   await writeJSON("categories.json", updated);
 
-  res.status(200).json({ message: "Category deleted" });
+  res.status(200).json({ success: true });
 });
 
 export default router;

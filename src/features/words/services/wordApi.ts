@@ -35,12 +35,12 @@ export const wordApi = createApi({
       invalidatesTags: ['Word'],
     }),
 
-    // PUT /words/:id
-    updateWord: builder.mutation<Word, Partial<Word> & { id: string }>({
-      query: ({ id, ...body }) => ({
+    // PATCH /words/:id
+    updateWord: builder.mutation<Word, { id: string; data: Partial<Word> }>({
+      query: ({ id, data }) => ({
         url: `/words/${id}`,
-        method: 'PUT',
-        data: body,
+        method: 'PATCH',
+        data,
       }),
       invalidatesTags: ['Word'],
     }),

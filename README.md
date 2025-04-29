@@ -20,10 +20,9 @@ Dictionaries
 - Quick button to start quiz
 
 Words
-- Enable editing or deleting words
+- Add form validation with error messages
 - Filtering, searching, pagination, sorting
 - Improve design (responsive flex structure)
-- Add "exclamation" to word classes enum
 
 Dashboard
 - User stats (word counts, learned %, etc.)
@@ -35,7 +34,6 @@ Profile
 - Statistics
 
 Other
-- Implement react hook form with validation (reusable validation message element)
 - Reusable components (input, textarea, select, checkbox, modal, buttons, spinner, universal error, validation error)
 - Add light transitions and animations
 - Better loading spinners, empty states, and error pages

@@ -29,6 +29,7 @@ export enum WordClass {
   Adverb = "Adverb",
   Phrase = "Phrase",
   Expression = "Expression",
+  Exclamation = "Exclamation",
 }
 
 export interface WordCategory {
@@ -51,6 +52,7 @@ export interface Word {
   isLearned: boolean;
   dictionaryId: string;
   categoryId?: string;
+  createdBy: string;
   createdAt: string;
 }
 
