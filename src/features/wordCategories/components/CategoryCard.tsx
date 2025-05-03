@@ -1,3 +1,4 @@
+import Button from '../../../shared/components/Button';
 import { WordCategory } from '../types/WordCategory';
 
 type Props = {
@@ -17,18 +18,8 @@ export default function CategoryCard({ category, onEdit, onDelete }: Props) {
       </div>
 
       <div className="flex gap-2 justify-end mt-4">
-        <button
-          onClick={() => onEdit(category)}
-          className="px-3 py-1 text-sm bg-primary-2 hover:bg-primary-1 rounded transition-colors"
-        >
-          Edit
-        </button>
-        <button
-          onClick={() => onDelete(category)}
-          className="px-3 py-1 text-sm bg-red-100 hover:bg-red-200 text-red-400 rounded transition-colors"
-        >
-          Delete
-        </button>
+        <Button variant="secondary" onClick={() => onEdit(category)}>Edit</Button>
+        <Button variant="danger" onClick={() => onDelete(category)}>Delete</Button>
       </div>
     </div>
   );

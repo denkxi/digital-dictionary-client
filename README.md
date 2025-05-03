@@ -20,13 +20,15 @@ Dictionaries
 - Quick button to start quiz
 
 Words
+- Add dictionary name, like "Basic Japanese Words"
 - Add form validation with error messages
 - Filtering, searching, pagination, sorting
 - Improve design (responsive flex structure)
+- Make cards smaller on mobile screens
 
 Dashboard
+- Remake a little bit (remove guide and move it into separate button for easy info, show recent dictionaries [by updatedAt] and recently added words)
 - User stats (word counts, learned %, etc.)
-- Recent activity
 - Dynamic content based on auth state
 
 Profile

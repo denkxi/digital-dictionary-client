@@ -1,4 +1,16 @@
+import Button from "../../../shared/components/Button";
 import { Word } from "../types/Word";
+import {
+  FiGlobe,
+  FiVolume2,
+  FiBookOpen,
+  FiMessageCircle,
+  FiTag,
+  FiStar,
+  FiCheckCircle,
+  FiEdit2,
+  FiTrash2,
+} from "react-icons/fi";
 
 type Props = {
   word: Word;
@@ -8,31 +20,70 @@ type Props = {
 
 export default function WordItem({ word, onEdit, onDelete }: Props) {
   return (
-    <div className="relative border border-primary-1 rounded-lg p-4 bg-white shadow-sm hover:shadow-md transition">
-      <div className="text-xl font-semibold text-text">{word.writing}</div>
-      <div className="text-sm text-gray-600 mb-1">Translation: {word.translation}</div>
-      {word.pronunciation && <div className="text-sm text-gray-500 italic">Pronunciation: {word.pronunciation}</div>}
-      {word.definition && <div className="text-sm text-gray-700">Definition: {word.definition}</div>}
-      {word.useExample && (
-        <div className="text-sm text-gray-700 italic mt-1">Example: "{word.useExample}"</div>
-      )}
-      {word.wordClass && <div className="text-xs text-gray-500 mt-1">Class: {word.wordClass}</div>}
-      {word.isStarred && <div className="text-xs text-yellow-600 font-medium">⭐ Starred</div>}
-      {word.isLearned && <div className="text-xs text-green-600 font-medium">✓ Learned</div>}
+    <div className="w-[300px] flex flex-col justify-between border border-primary-1 rounded-2xl p-5 shadow-sm bg-white hover:shadow-md transition">
+      <div className="text-xl font-bold text-title mb-1">{word.writing}</div>
 
-      <div className="absolute top-2 right-2 flex gap-1">
-        <button
+      <div className="text-base text-gray-700 flex items-center gap-2 mb-1">
+        <FiGlobe className="text-gray-500" />
+        {word.translation}
+      </div>
+
+      {word.pronunciation && (
+        <div className="text-sm text-gray-600 flex items-center gap-2 mb-1">
+          <FiVolume2 className="text-gray-500" />
+          <em>{word.pronunciation}</em>
+        </div>
+      )}
+
+      {word.definition && (
+        <div className="text-sm text-gray-700 flex items-start gap-2 mb-1">
+          <FiBookOpen className="text-gray-500 mt-0.5" />
+          <span>{word.definition}</span>
+        </div>
+      )}
+
+      {word.useExample && (
+        <div className="text-sm text-gray-700 flex items-start gap-2 mb-1 italic">
+          <FiMessageCircle className="text-gray-500 mt-0.5" />
+          <span>"{word.useExample}"</span>
+        </div>
+      )}
+
+      {word.wordClass && (
+        <div className="text-sm text-gray-600 flex items-center gap-2 mb-1">
+          <FiTag className="text-gray-500" />
+          {word.wordClass}
+        </div>
+      )}
+
+      <div className="flex flex-wrap gap-2 mt-2">
+        {word.isStarred && (
+          <div className="flex items-center text-yellow-600 text-sm gap-1 font-medium">
+            <FiStar /> Starred
+          </div>
+        )}
+        {word.isLearned && (
+          <div className="flex items-center text-green-600 text-sm gap-1 font-medium">
+            <FiCheckCircle /> Learned
+          </div>
+        )}
+      </div>
+
+      <div className="flex gap-2 pt-4">
+        <Button
+          variant="secondary"
           onClick={() => onEdit(word)}
-          className="text-xs px-2 py-1 bg-blue-100 hover:bg-blue-200 rounded"
+          className="flex items-center gap-1 w-1/2 justify-center"
         >
-          Edit
-        </button>
-        <button
+          <FiEdit2 /> Edit
+        </Button>
+        <Button
+          variant="danger"
           onClick={() => onDelete(word)}
-          className="text-xs px-2 py-1 bg-red-100 hover:bg-red-200 rounded"
+          className="flex items-center gap-1 w-1/2 justify-center"
         >
-          Delete
-        </button>
+          <FiTrash2 /> Delete
+        </Button>
       </div>
     </div>
   );
