@@ -4,6 +4,10 @@ import {
   useCreateDictionaryMutation,
   useUpdateDictionaryMutation,
 } from '../services/dictionaryApi';
+import Button from '../../../shared/components/Button';
+import { FiCheck, FiX } from 'react-icons/fi';
+import InputField from '../../../shared/components/InputField';
+import TextareaField from '../../../shared/components/TextareaField';
 
 type Props = {
   onClose: () => void;
@@ -16,6 +20,7 @@ export default function DictionaryModal({ onClose, mode, initialData }: Props) {
     register,
     handleSubmit,
     reset,
+    watch,
     formState: { errors },
   } = useForm<NewDictionary>({
     defaultValues: {
@@ -51,41 +56,35 @@ export default function DictionaryModal({ onClose, mode, initialData }: Props) {
         </h2>
 
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
-          <input
-            {...register('name', { required: true })}
-            placeholder="Dictionary Name"
-            className="input w-full"
+          <InputField
+            label="Dictionary Name"
+            register={register('name', { required: true })}
+            value={watch('name')}
           />
-          <input
-            {...register('sourceLanguage', { required: true })}
-            placeholder="Source Language"
-            className="input w-full"
+          <InputField
+            label="Source Language"
+            register={register('sourceLanguage', { required: true })}
+            value={watch('sourceLanguage')}
           />
-          <input
-            {...register('targetLanguage', { required: true })}
-            placeholder="Target Language"
-            className="input w-full"
+          <InputField
+            label="Target Language"
+            register={register('targetLanguage', { required: true })}
+            value={watch('targetLanguage')}
           />
-          <textarea
-            {...register('description')}
-            placeholder="Optional Description"
-            className="input w-full resize-none"
+          <TextareaField 
+            label="Description (optional)"
+            register={register('description')}
+            value={watch('description')}
+            rows={3}
           />
 
-          <div className="flex justify-end gap-2">
-            <button
-              type="button"
-              onClick={onClose}
-              className="px-4 py-2 text-sm bg-accent-2 hover:bg-green-100 rounded"
-            >
-              Cancel
-            </button>
-            <button
-              type="submit"
-              className="px-4 py-2 text-sm bg-primary-2 hover:bg-primary-1 rounded font-medium"
-            >
-              {mode === 'create' ? 'Create' : 'Save'}
-            </button>
+          <div className="flex justify-end gap-2 pt-2">
+            <Button variant="secondary" type="button" onClick={onClose} className="flex items-center gap-2">
+              <FiX /> Cancel
+            </Button>
+            <Button variant="primary" type="submit" className="flex items-center gap-2">
+              <FiCheck /> {mode === 'create' ? 'Create' : 'Save'}
+            </Button>
           </div>
         </form>
       </div>

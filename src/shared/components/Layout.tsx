@@ -5,7 +5,7 @@ export default function Layout() {
   return (
     <div className="flex">
       <Sidebar />
-      <main className="w-full min-h-screen bg-white p-6 md:ml-60">
+      <main className="w-full min-h-screen bg-white p-6 pt-20 md:pt-6 md:ml-60">
         <Outlet />
       </main>
     </div>

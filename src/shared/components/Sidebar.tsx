@@ -1,7 +1,7 @@
-import { useState } from 'react';
-import { NavLink } from 'react-router-dom';
-import { useAppSelector } from '../../app/hooks';
-import { useLogout } from '../hooks/useLogout';
+import { useState } from "react";
+import { NavLink } from "react-router-dom";
+import { useAppSelector } from "../../app/hooks";
+import { useLogout } from "../hooks/useLogout";
 import {
   FiHome,
   FiBookOpen,
@@ -10,15 +10,15 @@ import {
   FiUser,
   FiLogOut,
   FiMenu,
-  FiX
-} from 'react-icons/fi';
+  FiX,
+} from "react-icons/fi";
 
 const menuItems = [
-  { name: 'Dashboard', path: '/', icon: FiHome },
-  { name: 'Dictionaries', path: '/dictionaries', icon: FiBookOpen },
-  { name: 'Categories', path: '/word-categories', icon: FiFolder },
-  { name: 'Quizzes', path: '/quizzes', icon: FiEdit3 },
-  { name: 'Profile', path: '/profile', icon: FiUser }
+  { name: "Dashboard", path: "/", icon: FiHome },
+  { name: "Dictionaries", path: "/dictionaries", icon: FiBookOpen },
+  { name: "Categories", path: "/word-categories", icon: FiFolder },
+  { name: "Quizzes", path: "/quizzes", icon: FiEdit3 },
+  { name: "Profile", path: "/profile", icon: FiUser },
 ];
 
 export default function Sidebar() {
@@ -30,13 +30,17 @@ export default function Sidebar() {
 
   return (
     <>
-      {/* Sidebar toggle (mobile only) */}
-      <button
-        onClick={() => setIsMobileOpen(true)}
-        className="fixed top-4 left-4 z-50 md:hidden bg-primary-1 text-text p-2 rounded-lg shadow-md"
-      >
-        <FiMenu size={20} />
-      </button>
+      {/* Mobile header */}
+      <div className="md:hidden fixed top-0 left-0 w-full h-14 bg-primary-1 flex items-center justify-between px-4 shadow z-40">
+        <button
+          onClick={() => setIsMobileOpen(true)}
+          className="text-text text-xl"
+        >
+          <FiMenu />
+        </button>
+        <div className="text-title font-semibold text-base select-none">Dictionary App</div>
+        <div className="w-6" /> {/* spacer to balance icon */}
+      </div>
 
       {/* Fullscreen mobile sidebar */}
       {isMobileOpen && (
@@ -49,7 +53,9 @@ export default function Sidebar() {
               <FiX />
             </button>
 
-            <div className="text-xl font-bold text-title mb-6">Dictionary App</div>
+            <div className="text-xl font-bold text-title mb-6">
+              Dictionary App
+            </div>
             <nav className="flex flex-col gap-2">
               {menuItems.map(({ name, path, icon: Icon }) => (
                 <NavLink
@@ -58,7 +64,7 @@ export default function Sidebar() {
                   onClick={() => setIsMobileOpen(false)}
                   className={({ isActive }) =>
                     `flex items-center gap-3 px-4 py-2 rounded-xl hover:bg-primary-2 transition-all ${
-                      isActive ? 'bg-primary-2 font-semibold' : ''
+                      isActive ? "bg-primary-2 font-semibold" : ""
                     }`
                   }
                 >
@@ -90,7 +96,7 @@ export default function Sidebar() {
               to={path}
               className={({ isActive }) =>
                 `flex items-center gap-3 px-4 py-2 rounded-xl hover:bg-primary-2 transition-all ${
-                  isActive ? 'bg-primary-2 font-semibold' : ''
+                  isActive ? "bg-primary-2 font-semibold" : ""
                 }`
               }
             >

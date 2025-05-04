@@ -36,7 +36,7 @@ Profile
 - Statistics
 
 Other
-- Reusable components (input, textarea, select, checkbox, modal, buttons, spinner, universal error, validation error)
+- Reusable components (input, textarea, select, checkbox, modal, universal error, validation error)
 - Add light transitions and animations
 - Better loading spinners, empty states, and error pages
 

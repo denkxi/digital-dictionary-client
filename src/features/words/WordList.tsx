@@ -37,6 +37,17 @@ export default function WordList() {
     setDeletingWord(word);
   };
 
+  const onToggleStarred = (word: Word) => {
+    console.log('Toggle starred:', word.id);
+    // TODO: Call updateWord with { isStarred: !word.isStarred }
+  };
+  
+  const onToggleLearned = (word: Word) => {
+    console.log('Toggle learned:', word.id);
+    // TODO: Call updateWord with { isLearned: !word.isLearned }
+  };
+  
+
   return (
     <div>
       <BackButton />
@@ -67,7 +78,9 @@ export default function WordList() {
             word={word}
             onEdit={handleEdit}
             onDelete={handleDelete}
-          />
+            onToggleStarred={onToggleStarred}
+            onToggleLearned={onToggleLearned}
+        />
         ))}
       </div>
 
