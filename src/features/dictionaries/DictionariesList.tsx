@@ -9,7 +9,7 @@ import DictionaryModal from "./components/DictionaryModal";
 import ConfirmDeleteModal from "../../shared/components/ConfirmDeleteModal";
 import Spinner from "../../shared/components/Spinner";
 import Button from "../../shared/components/Button";
-import { FiPlus } from "react-icons/fi";
+import { FaPlus } from "react-icons/fa";
 
 export default function DictionariesList() {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -38,7 +38,7 @@ export default function DictionariesList() {
         <h1 className="text-2xl font-semibold text-text select-none">Your Dictionaries</h1>
         <Button variant="primary" onClick={() => setIsModalOpen(true)}>
           <span className="inline-flex items-center gap-2">
-            <FiPlus className="text-base" />
+            <FaPlus className="text-base" />
             New Dictionary
           </span>
         </Button>

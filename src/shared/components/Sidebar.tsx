@@ -34,7 +34,7 @@ export default function Sidebar() {
       <div className="md:hidden fixed top-0 left-0 w-full h-14 bg-primary-1 flex items-center justify-between px-4 shadow z-40">
         <button
           onClick={() => setIsMobileOpen(true)}
-          className="text-text text-xl"
+          className="text-text text-xl cursor-pointer hover:scale-110"
         >
           <FiMenu />
         </button>
@@ -48,7 +48,7 @@ export default function Sidebar() {
           <div className="bg-primary-1 text-text w-5/6 max-w-xs rounded-xl shadow-lg p-6 relative">
             <button
               onClick={() => setIsMobileOpen(false)}
-              className="absolute top-4 right-4 text-xl text-text"
+              className="absolute top-4 right-4 text-xl text-text cursor-pointer hover:scale-110"
             >
               <FiX />
             </button>

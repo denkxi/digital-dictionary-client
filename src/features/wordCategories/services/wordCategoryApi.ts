@@ -1,6 +1,6 @@
 import { createApi } from "@reduxjs/toolkit/query/react";
 import axiosBaseQuery from "../../../shared/utils/axiosBaseQuery";
-import { NewWordCategory, WordCategory } from "../types/WordCategory";
+import { NewWordCategory, WordCategory, WordCategoryResponse, WordCategorySearch } from "../types/WordCategory";
 
 export const wordCategoryApi = createApi({
   reducerPath: "wordCategoryApi",
@@ -8,13 +8,24 @@ export const wordCategoryApi = createApi({
   tagTypes: ["WordCategory"],
   endpoints: (builder) => ({
     // GET /word-categories
-    getWordCategories: builder.query<WordCategory[], void>({
-      query: () => ({
-        url: "/word-categories",
-        method: "GET",
+    getWordCategories: builder.query<WordCategoryResponse, WordCategorySearch>({
+      query: ({ search = '', sort = 'name-asc', page = 1, limit = 10 }) => ({
+        url: '/word-categories',
+        method: 'GET',
+        params: { search, sort, page, limit },
       }),
-      providesTags: ["WordCategory"],
+      providesTags: ['WordCategory'],
     }),
+
+    // GET /word-categories without pagination (for word form)
+    getAllWordCategories: builder.query<WordCategoryResponse, void>({
+      query: () => ({
+        url: '/word-categories',
+        method: 'GET',
+        params: { limit: 9999 },
+      }),
+    }),    
+    
 
     // POST /word-categories
     createWordCategory: builder.mutation<WordCategory, NewWordCategory>({
@@ -49,6 +60,7 @@ export const wordCategoryApi = createApi({
 
 export const {
   useGetWordCategoriesQuery,
+  useGetAllWordCategoriesQuery,
   useCreateWordCategoryMutation,
   useDeleteWordCategoryMutation,
   useUpdateWordCategoryMutation,

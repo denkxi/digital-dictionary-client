@@ -1,7 +1,7 @@
 import { useForm } from 'react-hook-form';
 import { useCreateWordMutation, useUpdateWordMutation } from '../services/wordApi';
 import { Word, NewWord, WordClass } from '../types/Word';
-import { useGetWordCategoriesQuery } from '../../wordCategories/services/wordCategoryApi';
+import { useGetAllWordCategoriesQuery } from '../../wordCategories/services/wordCategoryApi';
 import InputField from '../../../shared/components/InputField';
 import TextareaField from '../../../shared/components/TextareaField';
 import SelectField from '../../../shared/components/SelectField';
@@ -16,7 +16,8 @@ type Props = {
 };
 
 export default function WordModal({ dictionaryId, onClose, mode, initialData }: Props) {
-  const { data: categories = [] } = useGetWordCategoriesQuery();
+  const { data } = useGetAllWordCategoriesQuery();
+  const categories = data?.items || [];
   const [createWord] = useCreateWordMutation();
   const [updateWord] = useUpdateWordMutation();
 
