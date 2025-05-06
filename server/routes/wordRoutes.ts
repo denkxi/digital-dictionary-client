@@ -28,7 +28,7 @@ router.post('/', authenticate, async (req, res) => {
     writing: data.writing,
     translation: data.translation,
     pronunciation: data.pronunciation || '',
-    definition: data.description || '',
+    definition: data.definition || '',
     useExample: data.useExample || '',
     wordClass: data.wordClass || undefined,
     isStarred: data.isMarked ?? false,

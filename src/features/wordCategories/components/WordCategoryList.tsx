@@ -100,7 +100,8 @@ export default function WordCategoryList() {
         <p className="text-gray-500">No categories found.</p>
       )}
 
-      <PaginationWrapper
+      {totalItems > 0 && (
+        <PaginationWrapper
         currentPage={page}
         totalItems={totalItems}
         itemsPerPage={ITEMS_PER_PAGE}
@@ -117,6 +118,7 @@ export default function WordCategoryList() {
           ))}
         </div>
       </PaginationWrapper>
+      )}
 
       {isModalOpen && (
         <CategoryModal
