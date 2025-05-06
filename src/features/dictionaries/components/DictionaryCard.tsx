@@ -1,8 +1,8 @@
 import { useNavigate } from "react-router-dom";
 import { Dictionary } from "../types/Dictionary";
 import Button from "../../../shared/components/Button";
-import { FiBookOpen, FiArrowRight } from "react-icons/fi";
-import { FaRegEdit, FaRegTrashAlt } from "react-icons/fa";
+import { FiBookOpen } from "react-icons/fi";
+import { FaRegEdit, FaRegTrashAlt, FaArrowRight } from "react-icons/fa";
 
 type Props = {
   dictionary: Dictionary;
@@ -44,7 +44,7 @@ export default function DictionaryCard({
           onClick={() => navigate(`/dictionaries/${dictionary.id}`)}
           className="flex items-center justify-center gap-2 w-full"
         >
-          <FiArrowRight /> View Words
+          <FaArrowRight /> View Words
         </Button>
 
         <div className="flex gap-2 pt-2">

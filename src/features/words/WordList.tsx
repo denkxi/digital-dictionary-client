@@ -11,7 +11,7 @@ import {
 import { Word } from "./types/Word";
 import Spinner from "../../shared/components/Spinner";
 import Button from "../../shared/components/Button";
-import { FiPlus } from "react-icons/fi";
+import { FaPlus } from "react-icons/fa";
 
 export default function WordList() {
   const { dictionaryId } = useParams();
@@ -62,7 +62,7 @@ export default function WordList() {
           }}
         >
           <span className="inline-flex items-center gap-2">
-            <FiPlus className="text-base" />
+            <FaPlus className="text-base" />
             New Word
           </span>
         </Button>

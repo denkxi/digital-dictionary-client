@@ -10,12 +10,9 @@ Quiz
 
 Categories
 - Add form validation with error messages
-- Sort/filter/pagination
-- Improve design and responsiveness
 
 Dictionaries
 - Add form validation with error messages
-- More details on dictionary cards
 - Improve design
 - Quick button to start quiz
 
@@ -39,6 +36,7 @@ Other
 - Reusable components (input, textarea, select, checkbox, modal, universal error, validation error)
 - Add light transitions and animations
 - Better loading spinners, empty states, and error pages
+- Create a shard compoenent for forms - select between components (alternative for classic select, but all elements are always visible and are shown with icons)
 
 
 # React + TypeScript + Vite
