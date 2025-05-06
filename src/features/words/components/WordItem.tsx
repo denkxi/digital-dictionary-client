@@ -6,12 +6,8 @@ import {
   FiBookOpen,
   FiMessageCircle,
   FiTag,
-  FiStar,
-  FiCheckCircle,
-  FiEdit2,
-  FiTrash2,
 } from "react-icons/fi";
-import { FaRegStar, FaStar, FaRegCheckCircle, FaCheckCircle } from "react-icons/fa";
+import { FaRegStar, FaStar, FaRegCheckCircle, FaCheckCircle, FaRegEdit, FaRegTrashAlt } from "react-icons/fa";
 
 type Props = {
   word: Word;
@@ -28,14 +24,14 @@ export default function WordItem({ word, onEdit, onDelete, onToggleStarred, onTo
       <div className="absolute top-3 right-3 flex gap-3">
         <button
           onClick={() => onToggleStarred(word)}
-          className="text-yellow-500 hover:text-yellow-600 transition-all cursor-pointer hover:scale-105 text-3xl"
+          className="text-yellow-500 hover:text-yellow-600 transition-all cursor-pointer hover:scale-105 text-2xl"
           title="Toggle Starred"
         >
           {word.isStarred ? <FaStar /> : <FaRegStar />}
         </button>
         <button
           onClick={() => onToggleLearned(word)}
-          className="text-green-600 hover:text-green-700 transition-all cursor-pointer hover:scale-105 text-3xl"
+          className="text-green-600 hover:text-green-700 transition-all cursor-pointer hover:scale-105 text-2xl"
           title="Toggle Learned"
         >
           {word.isLearned ? <FaCheckCircle /> : <FaRegCheckCircle />}
@@ -96,14 +92,14 @@ export default function WordItem({ word, onEdit, onDelete, onToggleStarred, onTo
           onClick={() => onEdit(word)}
           className="flex items-center gap-1 w-1/2 justify-center"
         >
-          <FiEdit2 /> Edit
+          <FaRegEdit /> Edit
         </Button>
         <Button
           variant="danger"
           onClick={() => onDelete(word)}
           className="flex items-center gap-1 w-1/2 justify-center"
         >
-          <FiTrash2 /> Delete
+          <FaRegTrashAlt /> Delete
         </Button>
       </div>
     </div>

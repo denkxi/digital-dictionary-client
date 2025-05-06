@@ -3,6 +3,10 @@ import { useCreateQuizMutation } from '../services/quizApi';
 import { useGetUserDictionariesQuery } from '../../dictionaries/services/dictionaryApi';
 import { QuestionType } from '../types/quizTypes';
 import { useNavigate } from 'react-router-dom';
+import { FaPlay, FaTimes } from "react-icons/fa";
+import Button from '../../../shared/components/Button';
+import SelectField from '../../../shared/components/SelectField';
+import InputField from '../../../shared/components/InputField';
 
 type FormValues = {
   dictionaryId: string;
@@ -53,45 +57,34 @@ export default function NewQuizModal({ onClose }: Props) {
         >
           <h2 className="text-xl font-semibold text-text">Create a Quiz</h2>
 
-          <select {...register('dictionaryId', { required: true })} className="input w-full">
-            <option value={''} disabled>Select dictionary</option>
+          <SelectField label="Dictionary" register={register('dictionaryId', { required: true })}>
+            <option value="">Select dictionary</option>
             {dictionaries.map(dictionary => (
-              <option key={dictionary.id} value={dictionary.id}>
-                {dictionary.name} ({dictionary.sourceLanguage} → {dictionary.targetLanguage})
-              </option>
+              <option key={dictionary.id} value={dictionary.id}>{dictionary.name}</option>
             ))}
-          </select>
+          </SelectField>
 
-          <select {...register('questionType')} className="input w-full">
-            {Object.values(QuestionType).map((type) => (
-              <option key={type} value={type}>
-                {type.charAt(0).toUpperCase() + type.slice(1)}
-              </option>
+          <SelectField label="Question type" register={register('questionType')}>
+            <option value="">Select question type</option>
+            {Object.entries(QuestionType).map(([key, value]) => (
+              <option key={key} value={value}>{value}</option>
             ))}
-          </select>
+          </SelectField>
 
-          <input
+          <InputField
+            label="Word Count"
             type="number"
-            {...register('wordCount', { required: true, min: 2 })}
-            className="input w-full"
-            placeholder="Word Count"
+            register={register('wordCount', { required: true, min: 2 })}
+            value={watch('wordCount').toString()}
           />
 
-          <div className="flex justify-end gap-2">
-            <button
-              type="button"
-              onClick={onClose}
-              className="px-4 py-2 text-sm bg-accent-2 hover:bg-green-100 rounded"
-            >
-              Cancel
-            </button>
-            <button
-              type="submit"
-              disabled={isSubmitting}
-              className="px-4 py-2 text-sm bg-primary-2 hover:bg-primary-1 rounded font-medium"
-            >
-              Start
-            </button>
+          <div className="flex justify-end gap-2 pt-2">
+            <Button variant="secondary" type="button" onClick={onClose} className="flex items-center gap-2">
+              <FaTimes /> Cancel
+            </Button>
+            <Button variant="primary" type="submit" className="flex items-center gap-2" disabled={isSubmitting}>
+              <FaPlay /> Start
+            </Button>
           </div>
         </form>
       </FormProvider>

@@ -1,6 +1,7 @@
 import Button from '../../../shared/components/Button';
 import { WordCategory } from '../types/WordCategory';
-import { FiFolder, FiEdit2, FiTrash2 } from 'react-icons/fi';
+import { FiFolder } from 'react-icons/fi';
+import { FaRegEdit, FaRegTrashAlt } from "react-icons/fa";
 
 type Props = {
   category: WordCategory;
@@ -28,14 +29,14 @@ export default function CategoryCard({ category, onEdit, onDelete }: Props) {
           onClick={() => onEdit(category)}
           className="flex items-center gap-1 w-1/2 justify-center"
         >
-          <FiEdit2 /> Edit
+          <FaRegEdit /> Edit
         </Button>
         <Button
           variant="danger"
           onClick={() => onDelete(category)}
           className="flex items-center gap-1 w-1/2 justify-center"
         >
-          <FiTrash2 /> Delete
+          <FaRegTrashAlt /> Delete
         </Button>
       </div>
     </div>
