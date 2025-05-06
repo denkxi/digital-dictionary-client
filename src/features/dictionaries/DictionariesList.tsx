@@ -1,9 +1,15 @@
 import { useState } from "react";
 import DictionaryCard from "./components/DictionaryCard";
-import { useDeleteDictionaryMutation, useGetUserDictionariesQuery } from "./services/dictionaryApi";
+import {
+  useDeleteDictionaryMutation,
+  useGetUserDictionariesQuery,
+} from "./services/dictionaryApi";
 import { Dictionary } from "./types/Dictionary";
 import DictionaryModal from "./components/DictionaryModal";
 import ConfirmDeleteModal from "../../shared/components/ConfirmDeleteModal";
+import Spinner from "../../shared/components/Spinner";
+import Button from "../../shared/components/Button";
+import { FiPlus } from "react-icons/fi";
 
 export default function DictionariesList() {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -29,19 +35,19 @@ export default function DictionariesList() {
   return (
     <div>
       <div className="flex justify-between items-center mb-6">
-        <h1 className="text-2xl font-semibold text-text">Dictionaries</h1>
-        <button
-          onClick={() => setIsModalOpen(true)}
-          className="bg-primary-2 hover:bg-primary-1 px-4 py-2 rounded text-sm font-medium"
-        >
-          + New Dictionary
-        </button>
+        <h1 className="text-2xl font-semibold text-text select-none">Your Dictionaries</h1>
+        <Button variant="primary" onClick={() => setIsModalOpen(true)}>
+          <span className="inline-flex items-center gap-2">
+            <FiPlus className="text-base" />
+            New Dictionary
+          </span>
+        </Button>
       </div>
 
-      {isLoading && <p>Loading...</p>}
+      {isLoading && <Spinner message="Loading dictionaries..." />}
       {isError && <p className="text-red-500">Failed to load dictionaries.</p>}
 
-      <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+      <div className="flex flex-wrap gap-4">
         {dictionaries.map((dict) => (
           <DictionaryCard
             key={dict.id}

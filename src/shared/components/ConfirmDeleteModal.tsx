@@ -1,3 +1,5 @@
+import Button from "./Button";
+
 type ConfirmDeleteModalProps = {
     title?: string;
     description?: string;
@@ -17,18 +19,8 @@ type ConfirmDeleteModalProps = {
           <h2 className="text-xl font-semibold text-text">{title}</h2>
           <p className="text-sm text-gray-600">{description}</p>
           <div className="flex justify-end gap-2">
-            <button
-              onClick={onCancel}
-              className="px-4 py-2 text-sm bg-accent-2 hover:bg-green-100 rounded"
-            >
-              Cancel
-            </button>
-            <button
-              onClick={onConfirm}
-              className="px-4 py-2 text-sm bg-red-500 hover:bg-red-600 text-white rounded font-medium"
-            >
-              Delete
-            </button>
+            <Button variant="secondary" onClick={onCancel}>Cancel</Button>
+            <Button variant="danger" onClick={onConfirm}>Delete</Button>
           </div>
         </div>
       </div>

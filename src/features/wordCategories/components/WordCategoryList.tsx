@@ -7,6 +7,9 @@ import CategoryCard from "./CategoryCard";
 import { WordCategory } from "../types/WordCategory";
 import CategoryModal from "./CategoryModal";
 import ConfirmDeleteModal from "../../../shared/components/ConfirmDeleteModal";
+import Spinner from "../../../shared/components/Spinner";
+import Button from "../../../shared/components/Button";
+import { FiPlus } from "react-icons/fi";
 
 export default function WordCategoryList() {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -39,7 +42,7 @@ export default function WordCategoryList() {
       await deleteCategory(categoryToDelete.id).unwrap();
       setCategoryToDelete(null);
     } catch (err) {
-      console.error('Failed to delete category:', err);
+      console.error("Failed to delete category:", err);
     }
   };
 
@@ -47,18 +50,18 @@ export default function WordCategoryList() {
     <div className="space-y-6">
       <div className="flex justify-between items-center">
         <h1 className="text-2xl font-semibold text-text">Word Categories</h1>
-        <button
-          onClick={() => setIsModalOpen(true)}
-          className="bg-primary-2 hover:bg-primary-1 px-4 py-2 rounded text-sm font-medium"
-        >
-          + New Category
-        </button>
+        <Button variant="primary" onClick={() => setIsModalOpen(true)}>
+          <span className="inline-flex items-center gap-2">
+            <FiPlus className="text-base" />
+            New Category
+          </span>
+        </Button>
       </div>
 
-      {isLoading && <p>Loading...</p>}
+      {isLoading && <Spinner message="Loading categories..." />}
       {isError && <p className="text-red-500">Failed to load categories.</p>}
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+      <div className="flex flex-wrap gap-4">
         {categories.map((category) => (
           <CategoryCard
             key={category.id}
@@ -88,7 +91,6 @@ export default function WordCategoryList() {
           onConfirm={handleConfirmDelete}
         />
       )}
-
     </div>
   );
 }

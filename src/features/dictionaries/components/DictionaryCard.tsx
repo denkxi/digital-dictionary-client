@@ -1,5 +1,8 @@
 import { useNavigate } from "react-router-dom";
 import { Dictionary } from "../types/Dictionary";
+import Button from "../../../shared/components/Button";
+import { FiBookOpen, FiArrowRight } from "react-icons/fi";
+import { FaRegEdit, FaRegTrashAlt } from "react-icons/fa";
 
 type Props = {
   dictionary: Dictionary;
@@ -7,41 +10,59 @@ type Props = {
   onDelete: (dictionary: Dictionary) => void;
 };
 
-export default function DictionaryCard({ dictionary, onEdit, onDelete }: Props) {
+export default function DictionaryCard({
+  dictionary,
+  onEdit,
+  onDelete,
+}: Props) {
   const navigate = useNavigate();
-  const { name, sourceLanguage, targetLanguage, description, createdAt } = dictionary;
+  const { name, sourceLanguage, targetLanguage, description, createdAt } =
+    dictionary;
 
   return (
-    <div className="relative border border-primary-1 rounded-lg p-4 shadow-sm bg-white hover:shadow-md transition">
-      <div
-        onClick={() => navigate(`/dictionaries/${dictionary.id}`)}
-        className="cursor-pointer"
-      >
-        <div className="text-2xl font-semibold text-text mb-1">{name}</div>
-        <div className="text-lg font-semibold text-text/80 mb-1">
+    <div className="w-[300px] flex flex-col justify-between border border-primary-1 rounded-2xl p-4 shadow-sm bg-white hover:shadow-md transition select-none">
+      <div className="flex flex-col gap-2">
+        <div className="flex items-center gap-2 text-title">
+          <FiBookOpen className="text-xl" />
+          <h3 className="text-xl font-bold">{name}</h3>
+        </div>
+
+        <div className="text-sm font-medium text-gray-700">
           {sourceLanguage} → {targetLanguage}
         </div>
-        {description && (
-          <p className="text-sm text-gray-600 mb-2">{description}</p>
-        )}
-        <div className="text-xs text-gray-500">
-          Created at: {new Date(createdAt).toLocaleDateString()}
+
+        {description && <p className="text-sm text-gray-600">{description}</p>}
+
+        <div className="text-xs text-gray-400">
+          Created: {new Date(createdAt).toLocaleDateString()}
         </div>
       </div>
 
-      <div className="absolute top-2 right-2 flex gap-1">
-        <button
-          onClick={() => onEdit(dictionary)}
-          className="text-xs px-2 py-1 bg-blue-100 hover:bg-blue-200 rounded"
+      <div className="flex flex-col pt-4">
+        <Button
+          variant="primary"
+          onClick={() => navigate(`/dictionaries/${dictionary.id}`)}
+          className="flex items-center justify-center gap-2 w-full"
         >
-          Edit
-        </button>
-        <button
-          onClick={() => onDelete(dictionary)}
-          className="text-xs px-2 py-1 bg-red-100 hover:bg-red-200 rounded"
-        >
-          Delete
-        </button>
+          <FiArrowRight /> View Words
+        </Button>
+
+        <div className="flex gap-2 pt-2">
+          <Button
+            variant="secondary"
+            onClick={() => onEdit(dictionary)}
+            className="flex items-center gap-1 w-1/2 justify-center"
+          >
+            <FaRegEdit /> Edit
+          </Button>
+          <Button
+            variant="danger"
+            onClick={() => onDelete(dictionary)}
+            className="flex items-center gap-1 w-1/2 justify-center"
+          >
+            <FaRegTrashAlt /> Delete
+          </Button>
+        </div>
       </div>
     </div>
   );
