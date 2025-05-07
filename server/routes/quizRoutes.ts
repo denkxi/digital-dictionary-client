@@ -16,13 +16,6 @@ const router = express.Router();
 // todo: if quiz type is one certain type, then count and use only words that only have that type (for exampleif question type is pronunciation, then only use words that have a pronunciation)
 const MIN_WORDS = 2; // todo: move to shared constants
 
-type QuizSubmission = {
-  answers: {
-    questionId: string;
-    answer: string;
-  }[];
-};
-
 // Create a new quiz
 router.post("/", authenticate, async (req, res) => {
   const userId = (req as any).userId;
@@ -83,7 +76,7 @@ router.post("/", authenticate, async (req, res) => {
       const fallbackTypes = [
         QuestionType.Translation,
         QuestionType.Writing,
-      ].sort(() => 0.5 - Math.random());
+      ].sort(() => 0.5 - Math.random()); // choose random
       for (const fallbackType of fallbackTypes) {
         const alternativeAnswer = getAnswerForType(word, fallbackType);
         if (alternativeAnswer) {

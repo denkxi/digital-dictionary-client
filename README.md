@@ -13,14 +13,12 @@ Categories
 
 Dictionaries
 - Add form validation with error messages
-- Improve design
 - Quick button to start quiz
 
 Words
+- Might use "nativeWord" instead of "writing" for field name, for better understanding
 - Add dictionary name, like "Basic Japanese Words"
 - Add form validation with error messages
-- Filtering, searching, pagination, sorting
-- Improve design (responsive flex structure)
 - Make cards smaller on mobile screens
 
 Dashboard
@@ -36,7 +34,7 @@ Other
 - Reusable components (input, textarea, select, checkbox, modal, universal error, validation error)
 - Add light transitions and animations
 - Better loading spinners, empty states, and error pages
-- Create a shard compoenent for forms - select between components (alternative for classic select, but all elements are always visible and are shown with icons)
+- Create a shared component for forms - select between components (alternative of classic select, but all elements are always visible and are shown with icons)
 
 
 # React + TypeScript + Vite
