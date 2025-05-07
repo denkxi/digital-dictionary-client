@@ -1,8 +1,8 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Layout from './shared/components/Layout';
 import WordCategoryList from './features/wordCategories/components/WordCategoryList';
-import DictionariesList from './features/dictionaries/DictionariesList';
-import WordList from './features/words/WordList';
+import DictionariesList from './features/dictionaries/components/DictionariesList';
+import WordList from './features/words/components/WordList';
 import Dashboard from './features/dashboard/Dashboard';
 import AuthPage from './features/auth/AuthPage';
 import PrivateRoute from './shared/components/PrivateRoute';
