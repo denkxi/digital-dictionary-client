@@ -6,7 +6,81 @@ import { v4 as uuid } from 'uuid';
 
 const router = express.Router();
 
+// Get user's words by dictionary
 router.get('/', authenticate, async (req, res) => {
+  const userId = (req as any).userId;
+  const {
+    dictionaryId,
+    search = '',
+    sort = 'name-asc',
+    wordClass,
+    starred,
+    learned,
+    page = 1,
+    limit = 10,
+  } = req.query;
+
+  if (!dictionaryId) {
+    return res.status(400).json({ error: 'Missing dictionaryId' });
+  }
+
+  const allWords = await readJSON<Word[]>('words.json');
+  let words = allWords.filter(
+    w => w.dictionaryId === dictionaryId && w.createdBy === userId
+  );
+
+  // Search
+  if (search) {
+    const searchText = (search as string).toLowerCase();
+    words = words.filter(w =>
+      [w.writing, w.translation, w.pronunciation, w.definition, w.useExample]
+        .filter(Boolean) // keep fields that are not undefined
+        .some(field => field!.toLowerCase().includes(searchText)) // check if searchText is in any field
+    );
+  }
+
+  // Word Class Filter (multi)
+  if (wordClass) {
+    const classes = Array.isArray(wordClass) ? wordClass : [wordClass];
+    words = words.filter(w => w.wordClass && classes.includes(w.wordClass));
+  }
+
+  // Starred Filter
+  if (starred === 'true') {
+    words = words.filter(w => w.isStarred);
+  }
+
+  // Learned Filter
+  if (learned === 'true') {
+    words = words.filter(w => w.isLearned);
+  }
+
+  // Sorting
+  words = [...words].sort((a, b) => {
+    if (sort === 'name-asc') return a.writing.localeCompare(b.writing);
+    if (sort === 'name-desc') return b.writing.localeCompare(a.writing);
+    if (sort === 'date-asc') return new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime();
+    if (sort === 'date-desc') return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime();
+    return 0;
+  });
+
+  // Pagination
+  const pageNum = parseInt(page as string, 10);
+  const pageSize = parseInt(limit as string, 10);
+  const start = (pageNum - 1) * pageSize;
+  const paginated = words.slice(start, start + pageSize);
+
+  res.json({
+    items: paginated,
+    totalItems: words.length,
+    currentPage: pageNum,
+    totalPages: Math.ceil(words.length / pageSize),
+  });
+});
+
+
+// Get user's all words by dictionary
+router.get('/all', authenticate, async (req, res) => {
   const dictionaryId = req.query.dictionaryId;
   if (!dictionaryId) {
     return res.status(400).json({ error: 'Missing dictionaryId' });

@@ -1,5 +1,5 @@
 import { createApi } from '@reduxjs/toolkit/query/react';
-import { NewWord, Word } from '../types/Word';
+import { NewWord, PaginatedWordResponse, Word, WordFilters } from '../types/Word';
 import axiosBaseQuery from '../../../shared/utils/axiosBaseQuery';
 
 export const wordApi = createApi({
@@ -8,10 +8,20 @@ export const wordApi = createApi({
   tagTypes: ['Word'],
   endpoints: (builder) => ({
     // GET /words?dictionaryId=:id
-    getWordsByDictionary: builder.query<Word[], string>({
-      query: (dictionaryId) => ({
-        url: `/words?dictionaryId=${dictionaryId}`,
+    getWordsByDictionary: builder.query<PaginatedWordResponse, WordFilters>({
+      query: ({ dictionaryId, search = '', wordClass, starred, learned, sort = 'name-asc', page = 1, limit = 10 }) => ({
+        url: '/words',
         method: 'GET',
+        params: {
+          dictionaryId,
+          search,
+          sort,
+          page,
+          limit,
+          ...(wordClass?.length ? { wordClass } : {}),
+          ...(starred ? { starred: true } : {}),
+          ...(learned ? { learned: true } : {}),
+        },
       }),
       providesTags: ['Word'],
     }),

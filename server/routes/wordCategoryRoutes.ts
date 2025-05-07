@@ -6,7 +6,7 @@ import { v4 as uuid } from 'uuid';
 
 const router = express.Router();
 
-// Get all user's word categories
+// Get user's word categories
 router.get('/', authenticate, async (req, res) => {
   const userId = (req as any).userId;
   const { search = '', sort = 'name-asc', page = 1, limit = 10 } = req.query;
@@ -41,6 +41,13 @@ router.get('/', authenticate, async (req, res) => {
     currentPage: pageNum,
     totalPages: Math.ceil(sorted.length / pageLimit),
   });
+});
+
+// Get user's all word categories
+router.get('/all', authenticate, async (req, res) => {
+  const userId = (req as any).userId;
+  const categories = await readJSON<WordCategory[]>('categories.json');
+  res.json(categories.filter(c => c.createdBy === userId));
 });
 
 // Create new word category

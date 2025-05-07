@@ -1,14 +1,14 @@
 import { useState } from "react";
-import DictionaryCard from "./components/DictionaryCard";
+import DictionaryCard from "./DictionaryCard";
 import {
   useDeleteDictionaryMutation,
   useGetUserDictionariesQuery,
-} from "./services/dictionaryApi";
-import { Dictionary } from "./types/Dictionary";
-import DictionaryModal from "./components/DictionaryModal";
-import ConfirmDeleteModal from "../../shared/components/ConfirmDeleteModal";
-import Spinner from "../../shared/components/Spinner";
-import Button from "../../shared/components/Button";
+} from "../services/dictionaryApi";
+import { Dictionary } from "../types/Dictionary";
+import DictionaryModal from "./DictionaryModal";
+import ConfirmDeleteModal from "../../../shared/components/ConfirmDeleteModal";
+import Spinner from "../../../shared/components/Spinner";
+import Button from "../../../shared/components/Button";
 import { FaPlus } from "react-icons/fa";
 
 export default function DictionariesList() {
