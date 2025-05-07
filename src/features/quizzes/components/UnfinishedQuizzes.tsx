@@ -1,12 +1,14 @@
 import { Link } from 'react-router-dom';
 import { useGetUnfinishedQuizzesQuery } from '../services/quizApi';
+import { getRelativeTimeString } from '../../../shared/utils/time';
+import Spinner from '../../../shared/components/Spinner';
 
 export default function UnfinishedQuizzes() {
   const { data: quizzes = [], isLoading, isError } = useGetUnfinishedQuizzesQuery();
 
-  if (isLoading) return <p>Loading unfinished quizzes...</p>;
+  if (isLoading) return <Spinner message="Loading unfinished quizzes..." />;
   if (isError) return <p className="text-red-500">Failed to load quizzes.</p>;
-  if (!quizzes.length) return null; // Hide if none
+  if (!quizzes.length) return null;
 
   return (
     <div className="space-y-4">
@@ -16,9 +18,12 @@ export default function UnfinishedQuizzes() {
           <li key={quiz.id}>
             <Link
               to={`/quizzes/${quiz.id}`}
-              className="block bg-primary-1 hover:bg-primary-2 p-3 rounded shadow-sm"
+              className="block bg-primary-1 hover:bg-primary-2 p-4 rounded-xl shadow-sm transition"
             >
-              {quiz.dictionaryName} - {quiz.wordCount} words
+              <div className="font-medium text-title">{quiz.dictionaryName}</div>
+              <div className="text-sm text-gray-700">
+                {quiz.wordCount} words • Created {getRelativeTimeString(quiz.createdAt)}
+              </div>
             </Link>
           </li>
         ))}
