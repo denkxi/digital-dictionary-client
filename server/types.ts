@@ -103,6 +103,12 @@ export interface Question {
   isCorrect?: boolean;
 }
 
+export type WordStatsSummary = {
+  totalCount: number;
+  learnedCount: number;
+  percentageLearned: number;
+};
+
 // export interface UserStats {
 //   userId: string;
 //   totalQuizzes: number;

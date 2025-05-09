@@ -78,6 +78,23 @@ router.get('/', authenticate, async (req, res) => {
   });
 });
 
+// GET /api/words/by-ids?ids=a,b,c
+router.get('/by-ids', authenticate, async (req, res) => {
+  const userId = (req as any).userId;
+  const idsParam = req.query.ids;
+
+  if (!idsParam || typeof idsParam !== 'string') {
+    return res.status(400).json({ error: 'Missing or invalid ids' });
+  }
+
+  const ids = idsParam.split(',').map(id => id.trim());
+
+  const allWords = await readJSON<Word[]>('words.json');
+  const matched = allWords.filter(w => ids.includes(w.id) && w.createdBy === userId);
+
+  res.json(matched);
+});
+
 
 // Get user's all words by dictionary
 router.get('/all', authenticate, async (req, res) => {

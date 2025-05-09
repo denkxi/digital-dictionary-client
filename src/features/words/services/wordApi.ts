@@ -26,6 +26,16 @@ export const wordApi = createApi({
       providesTags: ['Word'],
     }),
 
+    // GET /words/by-ids?ids=a,b,c
+    getWordsByIds: builder.query<Word[], string[]>({
+      query: (ids) => ({
+        url: '/words/by-ids',
+        method: 'GET',
+        params: { ids: ids.join(',') },
+      }),
+    }),
+
+
     // POST /words
     createWord: builder.mutation<Word, NewWord>({
       query: (body) => ({
@@ -59,6 +69,7 @@ export const wordApi = createApi({
 
 export const {
   useGetWordsByDictionaryQuery,
+  useGetWordsByIdsQuery,
   useCreateWordMutation,
   useDeleteWordMutation,
   useUpdateWordMutation,
