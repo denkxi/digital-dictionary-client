@@ -22,7 +22,9 @@ export const statisticsApi = createApi({
         method: "GET",
         params: { dictionaryId },
       }),
-      providesTags: ["Statistics"],
+      providesTags: (result, error, dictionaryId) => [
+        { type: 'Statistics', id: dictionaryId },
+      ],
     }),
   }),
 

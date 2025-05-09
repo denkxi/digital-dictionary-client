@@ -5,6 +5,7 @@ import { FiBookOpen } from "react-icons/fi";
 import { FaRegEdit, FaRegTrashAlt, FaArrowRight } from "react-icons/fa";
 import { useState } from "react";
 import { FiBarChart2 } from "react-icons/fi";
+import DictionaryStatsCard from "../../statistics/components/DictionaryStatsCard";
 
 type Props = {
   dictionary: Dictionary;
@@ -79,10 +80,10 @@ export default function DictionaryCard({
       {statsOpen && (
         <div className="fixed inset-0 bg-black/40 flex items-center justify-center z-50">
           <div className="bg-white rounded-xl shadow-lg p-6 max-w-md w-full">
-            <h2 className="text-lg font-semibold mb-4 text-title">
-              Dictionary Stats: {dictionary.name}
+            <h2 className="text-xl mb-4 text-title">
+              Dictionary Statistics for <span className="font-bold">{dictionary.name}</span>
             </h2>
-            <p className="text-gray-500 text-sm">Loading stats...</p>
+            <DictionaryStatsCard dictionaryId={dictionary.id} />
 
             <div className="flex justify-end pt-4">
               <Button variant="secondary" onClick={() => setStatsOpen(false)}>
