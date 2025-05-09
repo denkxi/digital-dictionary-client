@@ -6,6 +6,7 @@ import authRouter from './routes/authRoutes.js';
 import wordRouter from './routes/wordRoutes.ts';
 import categoryRouter from './routes/wordCategoryRoutes.ts';
 import quizRouter from './routes/quizRoutes.ts';
+import statisticsRouter from './routes/statisticsRoutes.ts';
 
 
 const app = express();
@@ -23,6 +24,7 @@ app.use('/api/dictionaries', dictionaryRouter);
 app.use('/api/words', wordRouter);
 app.use('/api/word-categories', categoryRouter);
 app.use('/api/quizzes', quizRouter);
+app.use('/api/statistics', statisticsRouter);
 
 app.listen(port, () => {
   console.log(`Server running on http://localhost:${port}`);

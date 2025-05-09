@@ -4,6 +4,7 @@ import { authApi } from "../features/auth/services/authApi";
 import { dictionaryApi } from "../features/dictionaries/services/dictionaryApi";
 import { wordApi } from "../features/words/services/wordApi";
 import { quizApi } from "../features/quizzes/services/quizApi";
+import { statisticsApi } from "../features/statistics/services/statisticsApi";
 import { persistReducer, persistStore } from "redux-persist";
 import authReducer from "../features/auth/slices/authSlice";
 import storage from "redux-persist/lib/storage";
@@ -21,6 +22,7 @@ const appReducer = combineReducers({
   [dictionaryApi.reducerPath]: dictionaryApi.reducer,
   [wordApi.reducerPath]: wordApi.reducer,
   [quizApi.reducerPath]: quizApi.reducer,
+  [statisticsApi.reducerPath]: statisticsApi.reducer,
 });
 
 const rootReducer = (
@@ -46,7 +48,8 @@ export const store = configureStore({
       authApi.middleware,
       dictionaryApi.middleware,
       wordApi.middleware,
-      quizApi.middleware
+      quizApi.middleware,
+      statisticsApi.middleware
     ),
 });
 

@@ -3,6 +3,9 @@ import { Dictionary } from "../types/Dictionary";
 import Button from "../../../shared/components/Button";
 import { FiBookOpen } from "react-icons/fi";
 import { FaRegEdit, FaRegTrashAlt, FaArrowRight } from "react-icons/fa";
+import { useState } from "react";
+import { FiBarChart2 } from "react-icons/fi";
+import DictionaryStatsCard from "../../statistics/components/DictionaryStatsCard";
 
 type Props = {
   dictionary: Dictionary;
@@ -16,6 +19,7 @@ export default function DictionaryCard({
   onDelete,
 }: Props) {
   const navigate = useNavigate();
+  const [statsOpen, setStatsOpen] = useState(false);
   const { name, sourceLanguage, targetLanguage, description, createdAt } =
     dictionary;
 
@@ -63,7 +67,32 @@ export default function DictionaryCard({
             <FaRegTrashAlt /> Delete
           </Button>
         </div>
+
+        <Button
+          variant="secondary"
+          onClick={() => setStatsOpen(true)}
+          className="flex items-center justify-center gap-2 w-full mt-2"
+        >
+          <FiBarChart2 /> Statistics
+        </Button>
       </div>
+
+      {statsOpen && (
+        <div className="fixed inset-0 bg-black/40 flex items-center justify-center z-50">
+          <div className="bg-white rounded-xl shadow-lg p-6 max-w-md w-full">
+            <h2 className="text-xl mb-4 text-title">
+              Dictionary Statistics for <span className="font-bold">{dictionary.name}</span>
+            </h2>
+            <DictionaryStatsCard dictionaryId={dictionary.id} />
+
+            <div className="flex justify-end pt-4">
+              <Button variant="secondary" onClick={() => setStatsOpen(false)}>
+                Close
+              </Button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
