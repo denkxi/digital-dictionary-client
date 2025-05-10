@@ -45,7 +45,7 @@ export default function DictionaryCard({
       <div className="flex flex-col pt-4">
         <Button
           variant="primary"
-          onClick={() => navigate(`/dictionaries/${dictionary.id}`)}
+          onClick={() => navigate(`/dictionaries/${dictionary._id}`)}
           className="flex items-center justify-center gap-2 w-full"
         >
           <FaArrowRight /> View Words
@@ -83,7 +83,7 @@ export default function DictionaryCard({
             <h2 className="text-xl mb-4 text-title">
               Dictionary Statistics for <span className="font-bold">{dictionary.name}</span>
             </h2>
-            <DictionaryStatsCard dictionaryId={dictionary.id} />
+            <DictionaryStatsCard dictionaryId={dictionary._id} />
 
             <div className="flex justify-end pt-4">
               <Button variant="secondary" onClick={() => setStatsOpen(false)}>

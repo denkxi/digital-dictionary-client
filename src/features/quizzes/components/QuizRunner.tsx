@@ -29,7 +29,7 @@ export default function QuizRunner() {
   const currentQuestion = questions[state.currentIndex];
 
   const handleAnswer = async (answer: string) => {
-    const questionId = currentQuestion.id;
+    const questionId = currentQuestion._id;
 
     const updatedAnswers = {
       ...state.answers,
@@ -45,7 +45,7 @@ export default function QuizRunner() {
     } else {
       try {
         const response = await submitQuiz({
-          quizId: quiz.id,
+          quizId: quiz._id,
           answers: Object.entries(updatedAnswers).map(
             ([questionId, answer]) => ({
               questionId,
@@ -55,7 +55,7 @@ export default function QuizRunner() {
         }).unwrap();
 
         console.log("Submitted:", response);
-        navigate(`/quizzes/${quiz.id}/result`);
+        navigate(`/quizzes/${quiz._id}/result`);
       } catch (err) {
         alert("Failed to submit quiz");
       }

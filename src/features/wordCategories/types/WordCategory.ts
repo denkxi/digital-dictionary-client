@@ -1,12 +1,12 @@
 export interface WordCategory {
-  id: string;
+  _id: string;
   name: string;
   description?: string;
   createdBy: string;
   createdAt: string;
 }
 
-export type NewWordCategory = Omit<WordCategory, 'id' | 'createdAt' | 'createdBy'>;
+export type NewWordCategory = Omit<WordCategory, '_id' | 'createdAt' | 'createdBy'>;
 
 export type WordCategorySearch = {
   search?: string;

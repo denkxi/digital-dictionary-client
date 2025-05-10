@@ -39,7 +39,7 @@ export default function DictionaryModal({ onClose, mode, initialData }: Props) {
       if (mode === 'create') {
         await createDictionary(data).unwrap();
       } else if (mode === 'edit' && initialData) {
-        await updateDictionary({ id: initialData.id, data }).unwrap();
+        await updateDictionary({ id: initialData._id, data }).unwrap();
       }
       reset();
       onClose();

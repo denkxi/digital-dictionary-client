@@ -1,5 +1,5 @@
 export interface Dictionary {
-    id: string;
+    _id: string;
     name: string;
     sourceLanguage: string;
     targetLanguage: string;
@@ -8,4 +8,4 @@ export interface Dictionary {
     createdAt: string;
   }
   
-export type NewDictionary = Omit<Dictionary, 'id' | 'createdAt' | 'createdBy'>;
+export type NewDictionary = Omit<Dictionary, '_id' | 'createdAt' | 'createdBy'>;

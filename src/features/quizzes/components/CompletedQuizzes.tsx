@@ -15,9 +15,9 @@ export default function CompletedQuizzes() {
       <h2 className="text-xl font-semibold text-text">Completed Quizzes</h2>
       <ul className="space-y-2">
         {quizzes.map((quiz) => (
-          <li key={quiz.id}>
+          <li key={quiz._id}>
             <Link
-              to={`/quizzes/${quiz.id}/result`}
+              to={`/quizzes/${quiz._id}/result`}
               className="block bg-accent-1 hover:bg-accent-2 p-4 rounded-xl shadow-sm transition"
             >
               <div className="font-medium text-title">{quiz.dictionaryName}</div>

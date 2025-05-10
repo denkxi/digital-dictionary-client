@@ -6,7 +6,7 @@ export enum QuestionType {
   }
   
   export interface Quiz {
-    id: string;
+    _id: string;
     userId: string;
     dictionaryId: string;
     questionType: QuestionType;
@@ -19,7 +19,7 @@ export enum QuestionType {
   export type QuizWithName = Quiz & { dictionaryName: string };
   
   export interface Question {
-    id: string;
+    _id: string;
     quizId: string;
     wordId: string;
     type: QuestionType;

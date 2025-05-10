@@ -37,7 +37,7 @@ export default function QuizResult() {
       <div className="space-y-4">
         {questions.map((q) => (
           <div
-            key={q.id}
+            key={q._id}
             className={`p-4 rounded-xl border shadow-sm space-y-2 ${
               q.isCorrect
                 ? "border-green-300 bg-green-50"

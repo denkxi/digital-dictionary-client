@@ -62,7 +62,7 @@ export default function WordCategoryList() {
   const handleConfirmDelete = async () => {
     if (!categoryToDelete) return;
     try {
-      await deleteCategory(categoryToDelete.id).unwrap();
+      await deleteCategory(categoryToDelete._id).unwrap();
       setCategoryToDelete(null);
     } catch (err) {
       console.error("Failed to delete category:", err);
@@ -110,7 +110,7 @@ export default function WordCategoryList() {
         <div className="flex flex-wrap gap-4">
           {categories.map((category) => (
             <CategoryCard
-              key={category.id}
+              key={category._id}
               category={category}
               onEdit={handleEdit}
               onDelete={handleDelete}

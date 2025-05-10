@@ -36,12 +36,16 @@ export default function WordModal({ dictionaryId, onClose, mode, initialData }: 
     },
   });
 
-  const onSubmit = async (data: NewWord) => {
+  const onSubmit = async (formData: NewWord) => {
+    const payload = Object.fromEntries(
+        Object.entries(formData).filter(([_, v]) => v !== '')
+    ) as NewWord;
+
     try {
       if (mode === 'create') {
-        await createWord(data).unwrap();
+        await createWord(payload).unwrap();
       } else if (mode === 'edit' && initialData) {
-        await updateWord({ id: initialData.id, data }).unwrap();
+        await updateWord({ id: initialData._id, data: payload }).unwrap();
       }
       reset();
       onClose();
@@ -75,7 +79,7 @@ export default function WordModal({ dictionaryId, onClose, mode, initialData }: 
           <SelectField label="Category" register={register('categoryId')}>
             <option value="">No Category</option>
             {categories.map(c => (
-              <option key={c.id} value={c.id}>{c.name}</option>
+              <option key={c._id} value={c._id}>{c.name}</option>
             ))}
           </SelectField>
 

@@ -1,5 +1,5 @@
 export interface Word {
-  id: string;
+  _id: string;
   writing: string;
   translation: string;
   pronunciation?: string;
@@ -14,7 +14,7 @@ export interface Word {
   createdAt: string;
 }
 
-export type NewWord = Omit<Word, 'id' | 'createdAt' | 'createdBy'>;
+export type NewWord = Omit<Word, '_id' | 'createdAt' | 'createdBy'>;
 
 export enum WordClass {
   Noun = 'Noun',

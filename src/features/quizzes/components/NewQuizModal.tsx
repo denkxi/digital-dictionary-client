@@ -42,7 +42,7 @@ export default function NewQuizModal({ onClose }: Props) {
     try {
       const res = await createQuiz(data).unwrap();
       onClose();
-      navigate(`/quizzes/${res.quiz.id}`);
+      navigate(`/quizzes/${res.quiz._id}`);
     } catch (err: any) {
       alert(err?.data?.error || 'Failed to create quiz');
     }
@@ -60,7 +60,7 @@ export default function NewQuizModal({ onClose }: Props) {
           <SelectField label="Dictionary" register={register('dictionaryId', { required: true })}>
             <option value="">Select dictionary</option>
             {dictionaries.map(dictionary => (
-              <option key={dictionary.id} value={dictionary.id}>{dictionary.name}</option>
+              <option key={dictionary._id} value={dictionary._id}>{dictionary.name}</option>
             ))}
           </SelectField>
 

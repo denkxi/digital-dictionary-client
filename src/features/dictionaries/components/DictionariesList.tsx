@@ -50,7 +50,7 @@ export default function DictionariesList() {
       <div className="flex flex-wrap gap-4">
         {dictionaries.map((dict) => (
           <DictionaryCard
-            key={dict.id}
+            key={dict._id}
             dictionary={dict}
             onEdit={handleEdit}
             onDelete={handleDelete}
@@ -76,7 +76,7 @@ export default function DictionariesList() {
           onCancel={() => setDeletingDict(null)}
           onConfirm={async () => {
             try {
-              await deleteDictionary(deletingDict.id).unwrap();
+              await deleteDictionary(deletingDict._id).unwrap();
               setDeletingDict(null);
             } catch (err) {
               console.error("Delete failed", err);
