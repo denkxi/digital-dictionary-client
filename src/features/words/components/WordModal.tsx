@@ -38,6 +38,7 @@ export default function WordModal({ dictionaryId, onClose, mode, initialData }: 
 
   const onSubmit = async (formData: NewWord) => {
     const payload = Object.fromEntries(
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
         Object.entries(formData).filter(([_, v]) => v !== '')
     ) as NewWord;
 
