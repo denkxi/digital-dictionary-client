@@ -43,7 +43,7 @@ export default function UserStatsCard() {
           <p className="text-gray-600 font-medium">Most Missed Words:</p>
           <ul className="space-y-1">
             {missedWords.map((word) => (
-              <li key={word.id}>
+              <li key={word._id}>
                 <Link
                   to={`/dictionaries/${word.dictionaryId}`}
                   className="text-base font-medium text-blue-700 hover:text-blue-900 hover:underline transition"

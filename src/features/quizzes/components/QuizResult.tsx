@@ -13,7 +13,7 @@ export default function QuizResult() {
   if (isError || !data) return <p className="text-red-500">Failed to load result.</p>;
 
   const { quiz, questions } = data;
-
+    console.log(quiz);
   return (
     <div className="space-y-6 max-w-2xl mx-auto mt-10 px-4">
       <BackButton />
@@ -21,7 +21,7 @@ export default function QuizResult() {
 
       <div className="bg-white border border-gray-200 rounded-xl shadow p-5 space-y-2">
         <p>
-          <strong>Dictionary:</strong> {quiz.dictionaryName}
+          <strong>Dictionary: </strong> {quiz.dictionaryName}
         </p>
         <p>
           <strong>Score:</strong>{" "}
