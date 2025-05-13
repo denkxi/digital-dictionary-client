@@ -7,20 +7,29 @@ import {
   FiMessageCircle,
   FiTag,
 } from "react-icons/fi";
-import { FaRegStar, FaStar, FaRegCheckCircle, FaCheckCircle, FaRegEdit, FaRegTrashAlt } from "react-icons/fa";
+import {
+  FaRegStar,
+  FaStar,
+  FaRegCheckCircle,
+  FaCheckCircle,
+  FaRegEdit,
+} from "react-icons/fa";
 
 type Props = {
   word: Word;
   onEdit: (word: Word) => void;
-  onDelete: (word: Word) => void;
   onToggleStarred: (word: Word) => void;
   onToggleLearned: (word: Word) => void;
 };
 
-export default function WordItem({ word, onEdit, onDelete, onToggleStarred, onToggleLearned }: Props) {
+export default function WordItem({
+  word,
+  onEdit,
+  onToggleStarred,
+  onToggleLearned,
+}: Props) {
   return (
     <div className="relative w-[300px] flex flex-col justify-between border border-primary-1 rounded-2xl p-5 shadow-sm bg-white hover:shadow-md transition">
-      
       <div className="absolute top-3 right-3 flex gap-3">
         <button
           onClick={() => onToggleStarred(word)}
@@ -86,20 +95,14 @@ export default function WordItem({ word, onEdit, onDelete, onToggleStarred, onTo
         )}
       </div>
 
-      <div className="flex gap-2 pt-4">
+      <div className="flex justify-end pt-4">
         <Button
           variant="secondary"
           onClick={() => onEdit(word)}
-          className="flex items-center gap-1 w-1/2 justify-center"
+          className="p-2 rounded-full hover:bg-gray-100 text-gray-500 hover:text-gray-700"
+          aria-label="Edit word"
         >
-          <FaRegEdit /> Edit
-        </Button>
-        <Button
-          variant="danger"
-          onClick={() => onDelete(word)}
-          className="flex items-center gap-1 w-1/2 justify-center"
-        >
-          <FaRegTrashAlt /> Delete
+          <FaRegEdit className="text-lg" />
         </Button>
       </div>
     </div>

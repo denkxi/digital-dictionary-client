@@ -12,6 +12,7 @@ import {
   FiMenu,
   FiX,
 } from "react-icons/fi";
+import Button from "./Button";
 
 const menuItems = [
   { name: "Dashboard", path: "/", icon: FiHome },
@@ -28,6 +29,11 @@ export default function Sidebar() {
 
   if (!user) return null;
 
+  const onLogout = async () => {
+    await logout();
+    setIsMobileOpen(false);
+  }
+
   return (
     <>
       {/* Mobile header */}
@@ -38,7 +44,9 @@ export default function Sidebar() {
         >
           <FiMenu />
         </button>
-        <div className="text-title font-semibold text-base select-none">Dictionary App</div>
+        <div className="text-title font-semibold text-base select-none">
+          Dictionary App
+        </div>
         <div className="w-6" /> {/* spacer to balance icon */}
       </div>
 
@@ -75,12 +83,13 @@ export default function Sidebar() {
             </nav>
 
             <div className="mt-6">
-              <button
-                onClick={logout}
-                className="w-full flex items-center gap-2 justify-center px-4 py-2 bg-accent-2 rounded hover:bg-green-200 text-sm font-medium"
+              <Button
+                onClick={onLogout}
+                variant="secondary"
+                className="w-full flex items-center justify-center gap-2"
               >
                 <FiLogOut /> Logout
-              </button>
+              </Button>
             </div>
           </div>
         </div>
@@ -107,12 +116,13 @@ export default function Sidebar() {
         </nav>
 
         <div className="mt-auto px-4 pb-4">
-          <button
-            onClick={logout}
-            className="w-full flex items-center gap-2 justify-center px-4 py-2 bg-accent-2 rounded hover:bg-green-200 text-sm font-medium"
+          <Button
+            onClick={onLogout}
+            variant="secondary"
+            className="w-full flex items-center justify-center gap-2"
           >
             <FiLogOut /> Logout
-          </button>
+          </Button>
         </div>
       </aside>
     </>

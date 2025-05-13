@@ -68,10 +68,6 @@ export default function WordList() {
     setIsModalOpen(true);
   };
 
-  const handleDelete = (word: Word) => {
-    setDeletingWord(word);
-  };
-
   const onToggleStarred = async (word: Word) => {
     try {
       await updateWord({
@@ -145,13 +141,12 @@ export default function WordList() {
 
       {words.length > 0 && (
         <PaginationWrapper currentPage={page} totalItems={totalItems} itemsPerPage={limit} onPageChange={setPage}>
-        <div className="flex flex-wrap gap-4">
+        <div className="flex flex-wrap justify-center sm:justify-start gap-4">
           {words.map((word) => (
             <WordItem
               key={word.id}
               word={word}
               onEdit={handleEdit}
-              onDelete={handleDelete}
               onToggleStarred={onToggleStarred}
               onToggleLearned={onToggleLearned}
             />
