@@ -1,11 +1,12 @@
 export interface Dictionary {
-    id: number;
+    id: string;
     name: string;
     sourceLanguage: string;
     targetLanguage: string;
     description?: string;
-    createdBy: number;
+    createdBy: string;
     createdAt: string;
+    updatedAt?: string;
   }
   
 export type NewDictionary = Omit<Dictionary, 'id' | 'createdAt' | 'createdBy'>;

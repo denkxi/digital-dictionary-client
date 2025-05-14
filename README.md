@@ -1,86 +1,62 @@
-TODO:
-Auth
-- Auto-logout on 401
-- Add token expiration handling
+# Digital Dictionary Client
+A web application for creating and managing personal dictionaries, word categories, and interactive quizzes to enhance language learning.
 
-Categories
-- Delete/edit category
-- Dropdown with categories in word creation
-- Sort/filter/pagination
-- Improve design (like adjustible flex structure)
+## Features
+- **User Authentication**: Secure login and registration system
+- **Dashboard**: Overview of your learning progress and recent activities
+- **Dictionary Management**: Create and manage multiple dictionaries
+- **Word Management**: Add, edit, and organize words within dictionaries
+- **Word Categories**: Categorize words for better organization
+- **Quiz System**: Test your knowledge with customizable quizzes
+- **Quiz Results**: Review your performance after completing quizzes
+- **User Profile**: Manage your account settings and preferences
 
-Dictionaries
-- Delete/edit
-- More details on dictionary cards
-- Improve design
+## Tech Stack
+- **React**: Frontend library for building the user interface
+- **TypeScript**: Type-safe JavaScript for better development experience
+- **React Router**: For navigation and routing within the application
+- **Tailwind CSS**: Utility-first CSS framework for styling components
 
-Words
-- Fetch categories to show in dropdown
-- Enable editing or deleting words
-- Filtering, searching, pagination, sorting
+## Project Strcuture
+The application follows a feature-based architecture:
+- `src/features/`: Contains feature-specific components and logic
+    - `auth/`": Authentication-related components and logic
+    - `dashboard/`: Dashboard-related components and logic
+    - `dictionaries/`: Dictionary-related components and logic
+    - `words/`: Word-related components and logic
+    - `wordCategories/`: Word category-related components and logic
+    - `quizzes/`: Quiz-related components and logic
+    - `profile/`: User profile-related components and logic
+- `src/shared/`: Shared components and utilities
+    - `components/`: Reusable UI components
 
-Dashboard
-- User stats (word counts, learned %, etc.)
-- Recent activity
-- Dynamic content based on auth state
+## Getting Started
+### Prerequisites
+- Node.js (v14 or later recommended)
+- npm or yarn
 
-Other
-- Implement ract hook form with validation (reusable validation message element)
-- Reusable form components (input, textarea, select, checkbox)
-- ?Reusable modal component
+### Installation
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/denkxi/digital-dictionary-client.git
+   ```
+2. Navigate to the project directory:
+   ```bash
+   cd digital-dictionary-client
+   ```
+3. Install the dependencies:
+   ```bash
+   npm install
+   ```
+4. Start the development server:
+   ```bash
+   npm run dev
+   ```
+The application should now be running at `http://localhost:5173`.
 
+## Usage
+1. Sign up or log in to your account.
+2. Explore the dashboard to view your learning progress and recent activities.
+3. Create dictionaries, add words, and categorize them.
+4. Take quizzes to test your knowledge and review your results.
 
-# React + TypeScript + Vite
-
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
-
-Currently, two official plugins are available:
-
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
-
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
-
-```js
-export default tseslint.config({
-  extends: [
-    // Remove ...tseslint.configs.recommended and replace with this
-    ...tseslint.configs.recommendedTypeChecked,
-    // Alternatively, use this for stricter rules
-    ...tseslint.configs.strictTypeChecked,
-    // Optionally, add this for stylistic rules
-    ...tseslint.configs.stylisticTypeChecked,
-  ],
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
-```
-
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
-
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default tseslint.config({
-  plugins: {
-    // Add the react-x and react-dom plugins
-    'react-x': reactX,
-    'react-dom': reactDom,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended typescript rules
-    ...reactX.configs['recommended-typescript'].rules,
-    ...reactDom.configs.recommended.rules,
-  },
-})
-```

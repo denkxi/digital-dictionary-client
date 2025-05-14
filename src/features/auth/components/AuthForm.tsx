@@ -1,53 +1,48 @@
-import { useState } from 'react';
+import { useForm } from 'react-hook-form';
 import { useLoginMutation, useRegisterMutation } from '../services/authApi';
-import type { LoginRequest, RegisterRequest } from '../types/Auth';
 import { useNavigate } from 'react-router-dom';
 import { useAppDispatch } from '../../../app/hooks';
 import { setCredentials } from '../slices/authSlice';
+import InputField from '../../../shared/components/InputField';
+import Button from '../../../shared/components/Button';
+import { LoginRequest, RegisterRequest } from '../types/Auth';
 
 type Props = {
   mode: 'login' | 'register';
 };
 
+type FormValues = {
+  name?: string;
+  email: string;
+  password: string;
+};
+
 export default function AuthForm({ mode }: Props) {
-  const [form, setForm] = useState({
-    name: '',
-    email: '',
-    password: ''
-  });
+  const {
+    register,
+    handleSubmit,
+    watch,
+    formState: { errors },
+  } = useForm<FormValues>();
 
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
 
   const [login] = useLoginMutation();
-  const [register] = useRegisterMutation();
+  const [registerUser] = useRegisterMutation();
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-    setForm(prev => ({ ...prev, [name]: value }));
-  };
-
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-
+  const onSubmit = async (data: FormValues) => {
     try {
-      const payload = {
-        email: form.email,
-        password: form.password,
-        ...(mode === 'register' && { name: form.name })
-      };
+      const payload =
+        mode === 'login'
+          ? { email: data.email, password: data.password }
+          : { name: data.name!, email: data.email, password: data.password };
 
       const result = await (mode === 'login'
         ? login(payload as LoginRequest).unwrap()
-        : register(payload as RegisterRequest).unwrap());
+        : registerUser(payload as RegisterRequest).unwrap());
 
-        
-      // Save token and user locally and in redux store
       dispatch(setCredentials(result));
-      localStorage.setItem('token', result.token);
-      localStorage.setItem('user', JSON.stringify(result.user));
-
-      console.log('Auth success:', result);
       navigate('/');
     } catch (err: any) {
       alert(err.data?.error || 'Authentication failed');
@@ -55,39 +50,44 @@ export default function AuthForm({ mode }: Props) {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-4">
+    <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
       {mode === 'register' && (
-        <input
-          name="name"
-          type="text"
-          placeholder="Name"
-          value={form.name}
-          onChange={handleChange}
-          className="input w-full"
-        />
+        <>
+          <InputField
+            label="Name"
+            type="text"
+            register={register('name', { required: true })}
+            value={watch('name')}
+          />
+          {errors.name && (
+            <p className="text-xs text-red-500 mt-1">Name is required</p>
+          )}
+        </>
       )}
-      <input
-        name="email"
+
+      <InputField
+        label="Email"
         type="email"
-        placeholder="Email"
-        value={form.email}
-        onChange={handleChange}
-        className="input w-full"
+        register={register('email', { required: true })}
+        value={watch('email')}
       />
-      <input
-        name="password"
+      {errors.email && (
+        <p className="text-xs text-red-500 mt-1">Email is required</p>
+      )}
+
+      <InputField
+        label="Password"
         type="password"
-        placeholder="Password"
-        value={form.password}
-        onChange={handleChange}
-        className="input w-full"
+        register={register('password', { required: true })}
+        value={watch('password')}
       />
-      <button
-        type="submit"
-        className="w-full bg-primary-2 hover:bg-primary-1 py-2 rounded text-sm font-medium"
-      >
+      {errors.password && (
+        <p className="text-xs text-red-500 mt-1">Password is required</p>
+      )}
+
+      <Button type="submit" className="w-full mt-2">
         {mode === 'login' ? 'Sign In' : 'Sign Up'}
-      </button>
+      </Button>
     </form>
   );
 }

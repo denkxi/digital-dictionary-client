@@ -1,55 +1,67 @@
-import { createApi } from '@reduxjs/toolkit/query/react';
-import axiosBaseQuery from '../../../shared/utils/axiosBaseQuery';
-import { WordCategory } from '../types/WordCategory';
+import { createApi } from "@reduxjs/toolkit/query/react";
+import axiosBaseQuery from "../../../shared/utils/axiosBaseQuery";
+import { NewWordCategory, WordCategory, WordCategoryResponse, WordCategorySearch } from "../types/WordCategory";
 
 export const wordCategoryApi = createApi({
-  reducerPath: 'wordCategoryApi',
+  reducerPath: "wordCategoryApi",
   baseQuery: axiosBaseQuery(),
-  tagTypes: ['WordCategory'],
+  tagTypes: ["WordCategory"],
   endpoints: (builder) => ({
     // GET /word-categories
-    getWordCategories: builder.query<WordCategory[], void>({
+    getWordCategories: builder.query<WordCategoryResponse, WordCategorySearch>({
+      query: ({ search = '', sort = 'name-asc', page = 1, limit = 10 }) => ({
+        url: '/word-categories',
+        method: 'GET',
+        params: { search, sort, page, limit },
+      }),
+      providesTags: ['WordCategory'],
+    }),
+
+    // GET /word-categories without pagination (for word form)
+    getAllWordCategories: builder.query<WordCategoryResponse, void>({
       query: () => ({
         url: '/word-categories',
-        method: 'GET'
+        method: 'GET',
+        params: { limit: 9999 },
       }),
-      providesTags: ['WordCategory']
-    }),
+    }),    
+    
 
     // POST /word-categories
-    createWordCategory: builder.mutation<WordCategory, Partial<Omit<WordCategory, 'id' | 'createdAt'>>>({
+    createWordCategory: builder.mutation<WordCategory, NewWordCategory>({
       query: (body) => ({
-        url: '/word-categories',
-        method: 'POST',
-        data: body
+        url: "/word-categories",
+        method: "POST",
+        data: body,
       }),
-      invalidatesTags: ['WordCategory']
+      invalidatesTags: ["WordCategory"],
     }),
 
-    // (optional) DELETE /word-categories/:id
-    deleteWordCategory: builder.mutation<{ id: number }, number>({
+    // PATCH /word-categories/:id
+    updateWordCategory: builder.mutation<WordCategory, { id: string; data: Partial<WordCategory> }>({
+      query: ({ id, data }) => ({
+        url: `/word-categories/${id}`,
+        method: "PATCH",
+        data,
+      }),
+      invalidatesTags: ["WordCategory"],
+    }),
+
+    // DELETE /word-categories/:id
+    deleteWordCategory: builder.mutation<{ id: string }, string>({
       query: (id) => ({
         url: `/word-categories/${id}`,
-        method: 'DELETE'
+        method: "DELETE",
       }),
-      invalidatesTags: ['WordCategory']
+      invalidatesTags: ["WordCategory"],
     }),
-
-    // (optional) PUT /word-categories/:id
-    updateWordCategory: builder.mutation<WordCategory, Partial<WordCategory> & { id: number }>({
-      query: ({ id, ...body }) => ({
-        url: `/word-categories/${id}`,
-        method: 'PUT',
-        data: body
-      }),
-      invalidatesTags: ['WordCategory']
-    })
-  })
+  }),
 });
 
 export const {
   useGetWordCategoriesQuery,
+  useGetAllWordCategoriesQuery,
   useCreateWordCategoryMutation,
   useDeleteWordCategoryMutation,
-  useUpdateWordCategoryMutation
+  useUpdateWordCategoryMutation,
 } = wordCategoryApi;

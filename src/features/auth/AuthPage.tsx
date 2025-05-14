@@ -5,20 +5,27 @@ export default function AuthPage() {
   const [mode, setMode] = useState<'login' | 'register'>('login');
 
   return (
-    <div className="max-w-md mx-auto mt-10 p-6 bg-white shadow rounded">
-      <h1 className="text-2xl font-bold mb-6 text-text">
-        {mode === 'login' ? 'Sign In' : 'Sign Up'}
-      </h1>
+    <div className="max-w-md mx-auto mt-16 p-6 bg-white shadow-xl rounded-3xl space-y-6 transition-all">
+      <div className="text-center space-y-1">
+        <h1 className="text-3xl font-bold text-title">
+          {mode === 'login' ? 'Welcome Back 👋' : 'Create an Account 🚀'}
+        </h1>
+        <p className="text-sm text-gray-600">
+          {mode === 'login'
+            ? 'Sign in to continue learning.'
+            : 'Start your vocabulary journey now.'}
+        </p>
+      </div>
 
       <AuthForm mode={mode} />
 
-      <p className="text-sm mt-4 text-gray-600 text-center">
+      <div className="text-center text-sm text-gray-600">
         {mode === 'login' ? (
           <>
-            Don't have an account?{' '}
+            Don&apos;t have an account?{' '}
             <button
               onClick={() => setMode('register')}
-              className="text-primary-2 hover:underline"
+              className="text-primary-2 hover:underline font-medium cursor-pointer transition"
             >
               Sign up
             </button>
@@ -28,13 +35,13 @@ export default function AuthPage() {
             Already have an account?{' '}
             <button
               onClick={() => setMode('login')}
-              className="text-primary-2 hover:underline"
+              className="text-primary-2 hover:underline font-medium cursor-pointer transition"
             >
               Sign in
             </button>
           </>
         )}
-      </p>
+      </div>
     </div>
   );
 }

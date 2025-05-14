@@ -1,11 +1,18 @@
-import Sidebar from './Sidebar';
-import { Outlet } from 'react-router-dom';
+import Sidebar from "./Sidebar";
+import { Outlet } from "react-router-dom";
+import { useAppSelector } from "../../app/hooks";
 
 export default function Layout() {
+  const user = useAppSelector((state) => state.auth.user);
+
   return (
     <div className="flex">
-      <Sidebar />
-      <main className="ml-60 p-6 w-full min-h-screen bg-white">
+      {user && <Sidebar />}
+      <main
+        className={`w-full min-h-screen bg-white p-6 ${
+          user ? 'pt-20 md:pt-6 md:ml-60' : 'pt-12'
+        }`}
+      >
         <Outlet />
       </main>
     </div>

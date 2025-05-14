@@ -1,32 +1,92 @@
 import { useNavigate } from "react-router-dom";
+import { Dictionary } from "../types/Dictionary";
+import Button from "../../../shared/components/Button";
+import { FiBookOpen } from "react-icons/fi";
+import { FaRegEdit, FaArrowRight } from "react-icons/fa";
+import { useState } from "react";
+import { FiBarChart2 } from "react-icons/fi";
+import DictionaryStatsCard from "../../statistics/components/DictionaryStatsCard";
 
 type Props = {
-  dictionary: {
-    id: number;
-    sourceLanguage: string;
-    targetLanguage: string;
-    description?: string;
-    createdAt: string;
-  };
+  dictionary: Dictionary;
+  onEdit: (dictionary: Dictionary) => void;
+  onDelete: (dictionary: Dictionary) => void;
 };
 
-export default function DictionaryCard({ dictionary }: Props) {
+export default function DictionaryCard({
+  dictionary,
+  onEdit,
+}: Props) {
   const navigate = useNavigate();
-  const { sourceLanguage, targetLanguage, description, createdAt } = dictionary;
+  const [statsOpen, setStatsOpen] = useState(false);
+  const { name, sourceLanguage, targetLanguage, description, createdAt } =
+    dictionary;
 
   return (
-    <div 
-    onClick={() => navigate(`/dictionaries/${dictionary.id}`)}
-    className="border border-primary-1 rounded-lg p-4 shadow-sm bg-white hover:shadow-md cursor-pointer transition">
-      <div className="text-lg font-semibold text-text mb-1">
-        {sourceLanguage} → {targetLanguage}
+    <div className="w-[300px] flex flex-col justify-between border border-primary-1 rounded-2xl p-4 shadow-sm bg-white hover:shadow-md transition select-none">
+      <div className="flex flex-col gap-2">
+        <div className="flex items-center gap-2 text-title">
+          <FiBookOpen className="text-xl" />
+          <h3 className="text-xl font-bold">{name}</h3>
+        </div>
+
+        <div className="text-sm font-medium text-gray-700">
+          {sourceLanguage} → {targetLanguage}
+        </div>
+
+        {description && <p className="text-sm text-gray-600">{description}</p>}
+
+        <div className="text-xs text-gray-400">
+          Created: {new Date(createdAt).toLocaleDateString()}
+        </div>
       </div>
-      {description && (
-        <p className="text-sm text-gray-600 mb-2">{description}</p>
+
+      <div className="flex flex-col pt-4">
+        <Button
+          variant="primary"
+          onClick={() => navigate(`/dictionaries/${dictionary.id}`)}
+          className="flex items-center justify-center gap-2 w-full"
+        >
+          <FaArrowRight /> View Words
+        </Button>
+
+        <Button
+          variant="secondary"
+          onClick={() => setStatsOpen(true)}
+          className="flex items-center justify-center gap-2 w-full mt-2"
+        >
+          <FiBarChart2 /> Statistics
+        </Button>
+
+        <div className="flex justify-end pt-2">
+          <Button
+            variant="secondary"
+            onClick={() => onEdit(dictionary)}
+            className="p-2 rounded-full hover:bg-gray-100 text-gray-500 hover:text-gray-700"
+            aria-label="Edit dictionary"
+          >
+            <FaRegEdit className="text-lg" />
+          </Button>
+        </div>
+      </div>
+
+      {statsOpen && (
+        <div className="fixed inset-0 bg-black/40 flex items-center justify-center z-50">
+          <div className="bg-white rounded-xl shadow-lg p-6 max-w-md w-full">
+            <h2 className="text-xl mb-4 text-title">
+              Dictionary Statistics for{" "}
+              <span className="font-bold">{dictionary.name}</span>
+            </h2>
+            <DictionaryStatsCard dictionaryId={dictionary.id} />
+
+            <div className="flex justify-end pt-4">
+              <Button variant="secondary" onClick={() => setStatsOpen(false)}>
+                Close
+              </Button>
+            </div>
+          </div>
+        </div>
       )}
-      <div className="text-xs text-gray-500">
-        Created at: {new Date(createdAt).toLocaleDateString()}
-      </div>
     </div>
   );
 }

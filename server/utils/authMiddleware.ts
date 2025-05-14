@@ -2,10 +2,14 @@ import { Request, Response, NextFunction } from 'express';
 import jwt from 'jsonwebtoken';
 
 // TODO: use env file in real app
-const SECRET = 'super-secret-key'; 
+const JWT_SECRET = 'super-secret-key'; 
 
-export function generateToken(userId: number): string {
-  return jwt.sign({ userId }, SECRET, { expiresIn: '1h' });
+export function generateAccessToken(userId: string): string {
+  return jwt.sign({ userId }, JWT_SECRET, { expiresIn: '30m' });
+}
+
+export function generateRefreshToken(userId: string): string {
+  return jwt.sign({ userId }, JWT_SECRET, { expiresIn: '7d' });
 }
 
 export function authenticate(req: Request, res: Response, next: NextFunction) {
@@ -14,9 +18,10 @@ export function authenticate(req: Request, res: Response, next: NextFunction) {
     return res.status(401).json({ error: 'Missing or invalid token' });
   }
 
+  const token = authHeader.split(' ')[1];
+
   try {
-    const token = authHeader.split(' ')[1];
-    const payload = jwt.verify(token, SECRET) as { userId: number };
+    const payload = jwt.verify(token, JWT_SECRET) as { userId: string };
     (req as any).userId = payload.userId;
     next();
   } catch (err) {
