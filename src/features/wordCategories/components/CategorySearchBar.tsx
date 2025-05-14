@@ -16,7 +16,7 @@ export default function CategorySearchBar({
   sortOptions,
 }: Props) {
   return (
-    <div className="rounded-xl border border-gray-200 bg-white shadow-sm px-4 py-3 flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+    <div className="rounded-xl border border-gray-200 bg-white shadow-sm px-4 py-3 flex flex-col md:flex-row md:items-center gap-4 md:gap-6 md:px-6 md:py-4 md:max-w-3xl md:mx-auto">
       {/* Search */}
       <div className="relative w-full md:max-w-xs">
         <input

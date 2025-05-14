@@ -8,8 +8,10 @@
     --color-accent-2: #E8F5E9;
     --color-text: #333333;
     --color-title: #44566C;
+    --color-orange: #F4BB44;
+    --color-yellow: #fdfbd4;
 
-    --font-sans: 'Lato', sans-serif;
+    --font-sans: 'Noto Sans', sans-serif;
 }
 
 @layer utilities {

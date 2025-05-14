@@ -47,7 +47,7 @@ export default function DictionariesList() {
       {isLoading && <Spinner message="Loading dictionaries..." />}
       {isError && <p className="text-red-500">Failed to load dictionaries.</p>}
 
-      <div className="flex flex-wrap gap-4">
+      <div className="flex flex-wrap justify-center sm:justify-start gap-4">
         {dictionaries.map((dict) => (
           <DictionaryCard
             key={dict.id}

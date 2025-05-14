@@ -14,7 +14,7 @@ type ConfirmDeleteModalProps = {
     onCancel,
   }: ConfirmDeleteModalProps) {
     return (
-      <div className="fixed inset-0 bg-black/30 flex items-center justify-center z-50">
+      <div className="fixed inset-0 bg-black/30 flex items-center justify-center z-60">
         <div className="bg-white p-6 rounded-lg shadow-md w-full max-w-sm space-y-4">
           <h2 className="text-xl font-semibold text-text">{title}</h2>
           <p className="text-sm text-gray-600">{description}</p>

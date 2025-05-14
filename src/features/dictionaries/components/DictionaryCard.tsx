@@ -2,7 +2,7 @@ import { useNavigate } from "react-router-dom";
 import { Dictionary } from "../types/Dictionary";
 import Button from "../../../shared/components/Button";
 import { FiBookOpen } from "react-icons/fi";
-import { FaRegEdit, FaRegTrashAlt, FaArrowRight } from "react-icons/fa";
+import { FaRegEdit, FaArrowRight } from "react-icons/fa";
 import { useState } from "react";
 import { FiBarChart2 } from "react-icons/fi";
 import DictionaryStatsCard from "../../statistics/components/DictionaryStatsCard";
@@ -16,7 +16,6 @@ type Props = {
 export default function DictionaryCard({
   dictionary,
   onEdit,
-  onDelete,
 }: Props) {
   const navigate = useNavigate();
   const [statsOpen, setStatsOpen] = useState(false);
@@ -51,23 +50,6 @@ export default function DictionaryCard({
           <FaArrowRight /> View Words
         </Button>
 
-        <div className="flex gap-2 pt-2">
-          <Button
-            variant="secondary"
-            onClick={() => onEdit(dictionary)}
-            className="flex items-center gap-1 w-1/2 justify-center"
-          >
-            <FaRegEdit /> Edit
-          </Button>
-          <Button
-            variant="danger"
-            onClick={() => onDelete(dictionary)}
-            className="flex items-center gap-1 w-1/2 justify-center"
-          >
-            <FaRegTrashAlt /> Delete
-          </Button>
-        </div>
-
         <Button
           variant="secondary"
           onClick={() => setStatsOpen(true)}
@@ -75,13 +57,25 @@ export default function DictionaryCard({
         >
           <FiBarChart2 /> Statistics
         </Button>
+
+        <div className="flex justify-end pt-2">
+          <Button
+            variant="secondary"
+            onClick={() => onEdit(dictionary)}
+            className="p-2 rounded-full hover:bg-gray-100 text-gray-500 hover:text-gray-700"
+            aria-label="Edit dictionary"
+          >
+            <FaRegEdit className="text-lg" />
+          </Button>
+        </div>
       </div>
 
       {statsOpen && (
         <div className="fixed inset-0 bg-black/40 flex items-center justify-center z-50">
           <div className="bg-white rounded-xl shadow-lg p-6 max-w-md w-full">
             <h2 className="text-xl mb-4 text-title">
-              Dictionary Statistics for <span className="font-bold">{dictionary.name}</span>
+              Dictionary Statistics for{" "}
+              <span className="font-bold">{dictionary.name}</span>
             </h2>
             <DictionaryStatsCard dictionaryId={dictionary.id} />
 
