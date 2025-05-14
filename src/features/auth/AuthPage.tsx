@@ -8,7 +8,7 @@ export default function AuthPage() {
     <div className="max-w-md mx-auto mt-16 p-6 bg-white shadow-xl rounded-3xl space-y-6 transition-all">
       <div className="text-center space-y-1">
         <h1 className="text-3xl font-bold text-title">
-          {mode === 'login' ? 'Welcome Back 👋' : 'Create an Account 🚀'}
+          {mode === 'login' ? 'Welcome Back' : 'Create an Account'}
         </h1>
         <p className="text-sm text-gray-600">
           {mode === 'login'
