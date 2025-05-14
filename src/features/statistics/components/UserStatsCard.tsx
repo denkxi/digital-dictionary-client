@@ -9,9 +9,9 @@ import {
     FiAlertCircle,
   } from 'react-icons/fi';
 
+// remove surrounding card from this component — let Dashboard provide the card shell
 export default function UserStatsCard() {
   const { data: summary, isLoading, isError } = useGetUserSummaryQuery();
-
   const {
     data: missedWords,
     isLoading: isLoadingWords,
@@ -21,21 +21,16 @@ export default function UserStatsCard() {
   });
 
   if (isLoading) return <Spinner message="Loading user statistics..." />;
-  if (isError || !summary)
-    return <p className="text-red-500">Failed to load user statistics.</p>;
+  if (isError || !summary) return <p className="text-red-500">Failed to load user statistics.</p>;
 
   return (
-    <div className="bg-white border border-gray-200 rounded-3xl shadow-lg p-6 sm:p-8 space-y-6 max-w-4xl mx-auto">
-      <h2 className="text-2xl font-bold text-title mb-2">Your Quiz Stats</h2>
-
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 text-center text-sm text-gray-700">
+    <div className="space-y-6">
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6 text-sm text-gray-700">
         <StatBlock label="Total Quizzes" value={summary.totalQuizzes} Icon={FiList} />
         <StatBlock label="Perfect Scores" value={summary.perfectScores} Icon={FiCheckCircle} />
         <StatBlock label="Avg. Score" value={`${summary.averageScorePercent}%`} Icon={FiTrendingUp} />
         <StatBlock label="Total Mistakes" value={summary.totalMistakes} Icon={FiAlertCircle} />
       </div>
-
-      <hr className="border-t border-gray-200" />
 
       {isLoadingWords && <Spinner message="Loading missed words..." />}
       {!isLoadingWords && missedWords && missedWords.length > 0 && (
@@ -58,13 +53,13 @@ export default function UserStatsCard() {
           </ul>
         </div>
       )}
-
       {isErrorWords && (
         <p className="text-red-500 text-sm">Failed to load missed words.</p>
       )}
     </div>
   );
 }
+
 
 function StatBlock({
     label,

@@ -28,18 +28,34 @@ export default function QuizResult() {
       </button>
       <h1 className="text-3xl font-bold text-title">Quiz Results</h1>
 
-      <div className="bg-white border border-gray-200 rounded-xl shadow p-5 space-y-2">
-        <p>
-          <strong>Dictionary:</strong> {quiz.dictionaryName}
-        </p>
-        <p>
-          <strong>Score:</strong> {quiz.result?.correctCount}/
-          {quiz.result?.totalCount} ({quiz.result?.scorePercent}%)
-        </p>
-        <p>
-          <strong>Completed at:</strong>{" "}
-          {new Date(quiz.completedAt!).toLocaleString()}
-        </p>
+      <div className="bg-white border border-gray-200 rounded-3xl shadow-md p-6 sm:p-8 grid grid-cols-1 sm:grid-cols-3 gap-6 text-sm text-gray-700">
+        <div className="flex flex-col items-start gap-1">
+          <p className="text-xs text-gray-500 uppercase tracking-wide font-medium">
+            Dictionary
+          </p>
+          <p className="text-base font-semibold text-title">
+            {quiz.dictionaryName}
+          </p>
+        </div>
+
+        <div className="flex flex-col items-start gap-1">
+          <p className="text-xs text-gray-500 uppercase tracking-wide font-medium">
+            Score
+          </p>
+          <p className="text-base font-semibold text-title">
+            {quiz.result?.correctCount}/{quiz.result?.totalCount} (
+            {quiz.result?.scorePercent}%)
+          </p>
+        </div>
+
+        <div className="flex flex-col items-start gap-1">
+          <p className="text-xs text-gray-500 uppercase tracking-wide font-medium">
+            Completed
+          </p>
+          <p className="text-base text-gray-800">
+            {new Date(quiz.completedAt!).toLocaleString()}
+          </p>
+        </div>
       </div>
 
       <div className="space-y-4">

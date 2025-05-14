@@ -6,6 +6,7 @@ export interface Dictionary {
     description?: string;
     createdBy: string;
     createdAt: string;
+    updatedAt?: string;
   }
   
 export type NewDictionary = Omit<Dictionary, 'id' | 'createdAt' | 'createdBy'>;
